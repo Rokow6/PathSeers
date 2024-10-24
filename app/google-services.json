@@ -1,0 +1,34 @@
+{
+  "project_info": {
+    "project_number": "790892474397",
+    "project_id": "pathseer-dda86",
+    "storage_bucket": "pathseer-dda86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790892474397:android:81fb9518d1ac35b70d16f4",
+        "android_client_info": {
+          "package_name": "edu.utsa.cs3773.pathseer"
+        }
+      },
+      "oauth_client": [
+        {
+        "client_id": "790892474397-4rcpeqjgo6munh2ejo7jqbnv21286b40.apps.googleusercontent.com",
+        "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjyLyWlM7GReAb02NCZ-vfiFIR7aSHlT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

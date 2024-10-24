@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
-    id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -42,8 +42,15 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(platform("com.google.firebase:firebase-bom:33.5.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+
     implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.android.gms:play-services-auth:20.4.1")
+
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation ("androidx.credentials:credentials:1.3.0")
+    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0")
+
 }

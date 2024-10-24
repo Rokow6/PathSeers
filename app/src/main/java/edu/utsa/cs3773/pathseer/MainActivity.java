@@ -35,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Initialize Firebase
-        FirebaseApp.initializeApp(this);
-        Log.d("MainActivity", "Firebase Initialized");
+
         // Your existing Firebase Auth instance
         mAuth = FirebaseAuth.getInstance();
 

@@ -12,7 +12,7 @@ public class DataTest {
 //        db.notificationDao().addNotificationData(2, "New Offer!", "Offer1 Description");
 //        db.notificationDao().addNotificationData(2, "New Offer!", "Offer2 Description");
 //        db.notificationDao().addNotificationData(2, "New Offer!", "Offer3 Description");
-//        db.notificationDao().addNotificationData(3, "New Offer!", "Offer4 Description");
+//        db.notificationDao().addNotificationData(1, "New Offer!", "Offer4 Description");
 
         // if you ever need to delete the database's data (recreate the database),
         // you can hold click the app in the emulator -> app info -> storage & cache -> clear storage
@@ -20,13 +20,19 @@ public class DataTest {
         List<UserData> userDataList = db.userDao().getAll();
 
         for (UserData userData : userDataList) {
-            Log.d("DEBUGTEST", userData.userID + ", " + userData.age + ", " + userData.name);
+            Log.d("DEBUGTEST", userData.userID + ", " + userData.age + ", " + userData.name + ", " + userData.bio);
         }
 
         List<NotificationData> notificationDataList = db.notificationDao().getAll();
 
         for (NotificationData notificationData : notificationDataList) {
             Log.d("DEBUGTEST", notificationData.notifID + ", " + notificationData.title + ", " + notificationData.description);
+        }
+
+        // db.userDao().updateUserData(1, 21, "John Smith", "John's NEW NEW bio", "jsmith", "password");
+
+        for (UserData userData : userDataList) {
+            Log.d("DEBUGTEST", userData.userID + ", " + userData.age + ", " + userData.name + ", " + userData.bio);
         }
     }
 }

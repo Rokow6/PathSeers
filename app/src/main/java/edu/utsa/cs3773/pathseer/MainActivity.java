@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,6 +25,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import edu.utsa.cs3773.pathseer.data.AppDatabase;
+import edu.utsa.cs3773.pathseer.data.DataTest;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -49,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the Google Sign-In button listener
         findViewById(R.id.btn_google_sign_in).setOnClickListener(view -> signIn());
+
+        // Create Database instance and test it through logcat
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "pathseers-database")
+                .allowMainThreadQueries() // purely for testing can lead to big slow down with lots of data
+                .fallbackToDestructiveMigration() // will cause all data to be lost on schema change, which is fine since we only have test data
+                .build();
+        // DataTest.TestDatabase(db); // just using this script to test if the database queries are working
     }
 
     private void signIn() {

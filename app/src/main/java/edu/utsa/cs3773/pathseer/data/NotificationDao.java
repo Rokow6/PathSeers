@@ -18,7 +18,7 @@ public interface NotificationDao {
 
     // Returns a list of all notification data associated with a specific user
     @Query("SELECT * FROM NotificationData WHERE fk_userID = (:userID)")
-    List<NotificationData> getNotificationByUserID(int userID);
+    List<NotificationData> getNotificationsByUserID(int userID);
 
     // Adds a new notification to the database (id is auto-incremented)
     @Query("INSERT INTO NotificationData (fk_userID,title,description) VALUES (:userID,:title,:description)")

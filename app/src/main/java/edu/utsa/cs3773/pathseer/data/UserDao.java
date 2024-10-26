@@ -25,7 +25,7 @@ public interface UserDao {
     void deleteUserByID(int userID);
 
     // Updates the data of the user given by userID (Requires all data to be filled; or it might not but idk what might happen)
-    // NOTE: updates are slow and may not take a while before the new data can be retrieved;
+    // NOTE: updates are slow and may take a while before the new data can be retrieved;
     // we could consider using some sort of cache to access recently used data
     @Query("UPDATE UserData SET age = :age, name = :name, bio = :bio, username = :username, password = :password WHERE userID = (:userID)")
     void updateUserData(int userID, int age, String name, String bio, String username, String password);

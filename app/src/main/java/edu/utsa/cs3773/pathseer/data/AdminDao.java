@@ -27,7 +27,7 @@ public interface AdminDao {
     int getUserIDFromAdminID(int adminID);
 
     // Returns the admin ID of a user based on their user ID if they are an admin
-    // Might be able to be used to check if a user is an admin TODO: NEEDS TESTING FOR WHEN A USER IS NOT AN ADMIN
+    // Returns 0 if the user is not an admin
     @Query("SELECT adminID FROM AdminData WHERE fk_userID = (:userID)")
     int getAdminIDFromUserID(int userID);
 

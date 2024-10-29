@@ -31,8 +31,14 @@ public class DataTest {
 
         // db.userDao().updateUserData(1, 21, "John Smith", "John's NEW NEW bio", "jsmith", "password");
 
-        for (UserData userData : userDataList) {
-            Log.d("DEBUGTEST", userData.userID + ", " + userData.age + ", " + userData.name + ", " + userData.bio);
-        }
+//        for (UserData userData : userDataList) {
+//            Log.d("DEBUGTEST", userData.userID + ", " + userData.age + ", " + userData.name + ", " + userData.bio);
+//        }
+
+        int adminID = db.adminDao().getAdminIDFromUserID(1);
+        Log.d("DEBUGTEST", "jsmith's admin ID: " + adminID);
+
+        int userID = db.userDao().getUserIDFromUsername("jsmith");
+        Log.d("DEBUGTEST", "jsmith's user ID: " + userID);
     }
 }

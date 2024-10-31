@@ -1,4 +1,4 @@
-package edu.utsa.cs3773.pathseer;
+package edu.utsa.cs3773.pathseer.objectClasses;
 
 import java.io.*;
 

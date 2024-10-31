@@ -32,10 +32,10 @@ public interface JobSeekerDao {
     int getJobSeekerIDFromUserID(int userID);
 
     // Adds a user as a job seeker using their user ID and resume path
-    @Query("INSERT INTO JobSeekerData (fk_userID, resumePath) VALUES (:userID, :resumePath)")
+    @Query("INSERT INTO JobSeekerData (fk_userID,resumePath) VALUES (:userID,:resumePath)")
     void addJobSeekerData(int userID, String resumePath);
 
-    // Removes a user by job seeker ID (NOTE: this does not delete user data, just the job seeker status and resume path of a user)
+    // Removes a job seeker by job seeker ID (NOTE: this does not delete user data, just the job seeker status and resume path of a user)
     @Query("DELETE FROM JobSeekerData WHERE jobSeekerID = (:jobSeekerID)")
     void deleteJobSeekerByJobSeekerID(int jobSeekerID);
 

@@ -65,8 +65,7 @@ public class User {
     }
 
     public void setPassword(String password) throws NoSuchAlgorithmException {
-        Encryptor encryptor = new Encryptor();
-        String hashedPass = encryptor.encryptString(password); //need to store hash in the database
+        String hashedPass = Encryptor.encryptString(password); //need to store hash in the database
         this.password = hashedPass; // prolly don't need this
     }
 

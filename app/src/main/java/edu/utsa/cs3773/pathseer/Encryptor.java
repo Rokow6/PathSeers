@@ -7,7 +7,7 @@ import java.util.Random;
 public class Encryptor {
 
     // Returns hashed password
-    public String encryptString(String input) throws NoSuchAlgorithmException {
+    public static String encryptString(String input) throws NoSuchAlgorithmException {
         String salt = getSaltString(); //need to store salt in database
         String salted = input + salt;
 
@@ -21,7 +21,7 @@ public class Encryptor {
     }
 
     // Generates random string for hash
-    private String getSaltString() {
+    private static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();

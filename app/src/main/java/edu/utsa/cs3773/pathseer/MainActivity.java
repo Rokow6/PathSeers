@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.room.Room;
+
+import edu.utsa.cs3773.pathseer.data.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,5 +23,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Create Database instance and test it through logcat
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "pathseers-database")
+                .allowMainThreadQueries() // purely for testing can lead to big slow down with lots of data
+                .fallbackToDestructiveMigration() // will cause all data to be lost on schema change, which is fine since we only have test data
+                .build();
+        // DataTest.TestDatabase(db); // just using this script to test if the database queries are working
     }
 }

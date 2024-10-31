@@ -1,6 +1,9 @@
 package edu.utsa.cs3773.pathseer.objectClasses;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
+
+import edu.utsa.cs3773.pathseer.Encryptor;
 
 public class User {
     private int age;
@@ -55,12 +58,16 @@ public class User {
         this.username = username;
     }
 
+    // needs to change to check if password input matches hash in the database
+    // run encryptString(input + salt).equals(hash)
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) throws NoSuchAlgorithmException {
+        Encryptor encryptor = new Encryptor();
+        String hashedPass = encryptor.encryptString(password); //need to store hash in the database
+        this.password = hashedPass; // prolly don't need this
     }
 
     public ArrayList<Notification> getNotifications() {

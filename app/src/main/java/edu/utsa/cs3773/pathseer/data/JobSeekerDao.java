@@ -43,4 +43,8 @@ public interface JobSeekerDao {
     @Query("DELETE FROM JobSeekerData WHERE fk_userID = (:jobSeekerID)")
     void deleteJobSeekerByUserID(int jobSeekerID);
 
+    // Updates the resume path of the job seeker given by jobSeekerID
+    @Query("UPDATE JobSeekerData SET resumePath = :resumePath WHERE jobSeekerID = (:jobSeekerID)")
+    void updateJobSeekerByID(int jobSeekerID, String resumePath);
+
 }

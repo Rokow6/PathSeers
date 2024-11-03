@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 // Database class used to access the database in code as an instanced object
 @Database(entities = {UserData.class, NotificationData.class, AdminData.class, JobSeekerData.class, EmployerData.class,
-                        JobListingData.class, ApplicationData.class}, version = 8)
+                        JobListingData.class, ApplicationData.class, BenefitData.class, RequirementData.class}, version = 9)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract NotificationDao notificationDao();
@@ -14,4 +14,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract EmployerDao employerDao();
     public abstract JobListingDao jobListingDao();
     public abstract ApplicationDao applicationDao();
+    public abstract BenefitDao benefitDao();
+    public abstract RequirementDao requirementDao();
 }

@@ -28,6 +28,7 @@ public interface ResponsibilityDao {
     @Query("INSERT INTO ResponsibilityData (fk_jobListingID,text) VALUES (:jobListingID,:text)")
     void addResponsibilityData(int jobListingID, String text);
 
+    // Returns the responsibilityID of a responsibility based on its data; returns 0 if responsibility does not exist
     @Query("SELECT responsibilityID FROM ResponsibilityData WHERE fk_jobListingID = :jobListingID AND text = :text")
     void getResponsibilityIDFromData(int jobListingID, String text);
 

@@ -28,6 +28,7 @@ public interface RequirementDao {
     @Query("INSERT INTO RequirementData (fk_jobListingID,text) VALUES (:jobListingID,:text)")
     void addRequirementData(int jobListingID, String text);
 
+    // Returns the requirementID of a requirement based on its data; returns 0 if requirement does not exist
     @Query("SELECT requirementID FROM RequirementData WHERE fk_jobListingID = :jobListingID AND text = :text")
     void getRequirementIDFromData(int jobListingID, String text);
 

@@ -28,6 +28,7 @@ public interface BenefitDao {
     @Query("INSERT INTO BenefitData (fk_jobListingID,text) VALUES (:jobListingID,:text)")
     void addBenefitData(int jobListingID, String text);
 
+    // Returns the benefitID of a benefit based on its data; returns 0 if benefit does not exist
     @Query("SELECT benefitID FROM BenefitData WHERE fk_jobListingID = :jobListingID AND text = :text")
     void getBenefitIDFromData(int jobListingID, String text);
 

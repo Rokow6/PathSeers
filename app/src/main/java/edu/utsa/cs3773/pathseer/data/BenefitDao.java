@@ -18,11 +18,11 @@ public interface BenefitDao {
 
     // Returns a list of all benefit data associated with a specific job listing
     @Query("SELECT * FROM BenefitData WHERE fk_jobListingID = (:jobListingID)")
-    List<BenefitData> getBenefitDataByUserID(int jobListingID);
+    List<BenefitData> getBenefitDataByJobListingID(int jobListingID);
 
     // Returns a list of all benefit text associated with a specific job listing
     @Query("SELECT text FROM BenefitData WHERE fk_jobListingID = (:jobListingID)")
-    List<String> getBenefitTextByUserID(int jobListingID);
+    List<String> getBenefitTextByJobListingID(int jobListingID);
 
     // Adds a new benefit to the database (id is auto-incremented)
     @Query("INSERT INTO BenefitData (fk_jobListingID,text) VALUES (:jobListingID,:text)")

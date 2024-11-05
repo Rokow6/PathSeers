@@ -1,6 +1,9 @@
 package edu.utsa.cs3773.pathseer.objectClasses;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
+
+import edu.utsa.cs3773.pathseer.data.UserDao;
 
 public class JobSeeker extends User {
     private Resume resume;
@@ -10,13 +13,13 @@ public class JobSeeker extends User {
         applications = new ArrayList<JobListing>();
     }
 
-    public JobSeeker(int age, String name, String bio, String username, String password) {
-        super(age, name, bio, username, password);
+    public JobSeeker(int age, String name, String bio, String username, String password, UserDao userDao) throws NoSuchAlgorithmException {
+        super(age, name, bio, username, password, userDao);
         applications = new ArrayList<JobListing>();
     }
 
-    public JobSeeker(int age, String name, String bio, String username, String password, Resume resume) {
-        super(age, name, bio, username, password);
+    public JobSeeker(int age, String name, String bio, String username, String password, UserDao userDao, Resume resume) throws NoSuchAlgorithmException {
+        super(age, name, bio, username, password, userDao);
         this.resume = resume;
         applications = new ArrayList<JobListing>();
     }

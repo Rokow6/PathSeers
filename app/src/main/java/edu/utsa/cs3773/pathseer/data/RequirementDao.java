@@ -30,7 +30,7 @@ public interface RequirementDao {
 
     // Returns the requirementID of a requirement based on its data; returns 0 if requirement does not exist
     @Query("SELECT requirementID FROM RequirementData WHERE fk_jobListingID = :jobListingID AND text = :text")
-    void getRequirementIDFromData(int jobListingID, String text);
+    int getRequirementIDFromData(int jobListingID, String text);
 
     // Removes a requirement from the database based on requirement ID (NOTE: this is not the job listing ID)
     @Query("DELETE FROM RequirementData WHERE requirementID = (:requirementID)")

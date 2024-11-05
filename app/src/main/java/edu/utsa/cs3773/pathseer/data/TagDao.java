@@ -29,7 +29,7 @@ public interface TagDao {
 
     // Returns the tagID of a tag based on its text; returns 0 if tag does not exist
     @Query("SELECT tagID FROM TagData WHERE text = :text")
-    void getTagIDFromText(String text);
+    int getTagIDFromText(String text);
 
     // Removes a tag from the database based on tag ID (NOTE: this is not the job listing ID)
     @Query("DELETE FROM TagData WHERE tagID = (:tagID)")

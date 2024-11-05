@@ -30,7 +30,7 @@ public interface BenefitDao {
 
     // Returns the benefitID of a benefit based on its data; returns 0 if benefit does not exist
     @Query("SELECT benefitID FROM BenefitData WHERE fk_jobListingID = :jobListingID AND text = :text")
-    void getBenefitIDFromData(int jobListingID, String text);
+    int getBenefitIDFromData(int jobListingID, String text);
 
     // Removes a benefit from the database based on benefit ID (NOTE: this is not the job listing ID)
     @Query("DELETE FROM BenefitData WHERE benefitID = (:benefitID)")

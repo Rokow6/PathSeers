@@ -30,7 +30,7 @@ public interface ResponsibilityDao {
 
     // Returns the responsibilityID of a responsibility based on its data; returns 0 if responsibility does not exist
     @Query("SELECT responsibilityID FROM ResponsibilityData WHERE fk_jobListingID = :jobListingID AND text = :text")
-    void getResponsibilityIDFromData(int jobListingID, String text);
+    int getResponsibilityIDFromData(int jobListingID, String text);
 
     // Removes a responsibility from the database based on responsibility ID (NOTE: this is not the job listing ID)
     @Query("DELETE FROM ResponsibilityData WHERE responsibilityID = (:responsibilityID)")

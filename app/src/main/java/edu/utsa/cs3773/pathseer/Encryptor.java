@@ -4,11 +4,17 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
+import edu.utsa.cs3773.pathseer.data.UserDao;
+
 public class Encryptor {
 
     // Returns hashed password
-    public static String encryptString(String input) throws NoSuchAlgorithmException {
-        String salt = getSaltString(); //need to store salt in database
+    public static String encryptString(String input, int userID, UserDao userDao) throws NoSuchAlgorithmException {
+        String salt = getSaltString();
+
+        userDao.updateSalt(userID, salt);
+
         String salted = input + salt;
 
         MessageDigest md = MessageDigest.getInstance("MD5");

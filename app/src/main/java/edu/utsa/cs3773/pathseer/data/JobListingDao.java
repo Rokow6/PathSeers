@@ -20,7 +20,20 @@ public interface JobListingDao {
     @Query("SELECT * FROM JobListingData WHERE fk_employerID = (:employerID)")
     List<JobListingData> getJobListingsByEmployerID(int employerID);
 
+    // Returns the id of a job listing based on its employer ID and title; returns 0 if job listing does not exist
+    @Query("SELECT jobListingID FROM JobListingData WHERE fk_employerID = (:employerID) AND title = (:title)")
+    int getJobListingIDFromData(int employerID, String title);
+
+    // Currently commented this function out since the above function is probably better; will remove once it's for sure useless
+    // Returns the id of a job listing based on its data; returns 0 if job listing does not exist
+    // Might be overkill (and also very slow) checking every column, so only use this one if necessary
+//    @Query("SELECT jobListingID FROM JobListingData " +
+//            "WHERE fk_employerID = (:employerID) AND title = (:title) AND location = (:location) " +
+//            "AND description = (:description) AND pay = (:pay)")
+//    int getJobListingIDFromData(int employerID, String title, String location, String description, double pay);
+
     // Adds a new job listing to the database (id is auto-incremented)
+    // Make sure to check that the title is not a duplicate for the employer using getJobListingIDFromData
     @Query("INSERT INTO JobListingData (fk_employerID,title,location,description,pay) VALUES (:employerID,:title,:location,:description,:pay)")
     void addJobListingData(int employerID, String title, String location, String description, double pay);
 

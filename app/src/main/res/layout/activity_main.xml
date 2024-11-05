@@ -13,7 +13,7 @@
         android:id="@+id/logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/ic_logo"
+        android:src="@color/black"
         android:layout_gravity="center_horizontal"
         android:contentDescription="App Logo" />
 
@@ -71,6 +71,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Login"
+        android:backgroundTint="#00796B"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:layout_gravity="center_horizontal" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Register"
         android:backgroundTint="#00796B"
         android:textColor="#FFFFFF"
         android:padding="12dp"

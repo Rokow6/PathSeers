@@ -25,7 +25,15 @@ public class Encryptor {
 
         return bigInt.toString(16);
     }
+    //Hash an entered password with an existing salt
+    public static String encryptString(String password, String salt) throws NoSuchAlgorithmException {
+        String salted = password + salt;
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] messageDigest = md.digest(salted.getBytes());
+        BigInteger bigInt = new BigInteger(1, messageDigest);
+        return bigInt.toString(16);
 
+    }
     // Generates random string for hash
     private static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

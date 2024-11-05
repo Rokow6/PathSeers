@@ -20,6 +20,10 @@ public interface UserDao {
     @Query("SELECT userID FROM UserData WHERE username = (:username)")
     int getUserIDFromUsername(String username);
 
+    //Returns the user data for a specified username
+    @Query("SELECT * FROM UserData WHERE username = :username")
+    UserData getUserDataByUsername(String username);
+
     // Adds a new user to the database (id is auto-incremented)
     // Make sure to check the database with getUserIDFromUsername to check if the username already exists
     // (You may need to just pass in an empty string for anything that's currently blank)

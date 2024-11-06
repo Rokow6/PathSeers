@@ -1,9 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PathSeer" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.PathSeer" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">#00000000</item>
     </style>
 
     <style name="Theme.PathSeer" parent="Base.Theme.PathSeer" />
+
+    <color name="colorPrimary">#007E73</color>
+    <color name="colorPrimaryDark">#003D37</color>
+    <color name="colorAccent">#E91E63</color>
 </resources>

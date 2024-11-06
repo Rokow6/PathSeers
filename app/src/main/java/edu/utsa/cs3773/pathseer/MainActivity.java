@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
-import edu.utsa.cs3773.pathseer.data.DataTest;
 import edu.utsa.cs3773.pathseer.data.UserDao;
 import edu.utsa.cs3773.pathseer.data.UserData;
 
@@ -35,12 +34,11 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.button_sign_in);
         registerButton = findViewById(R.id.button_register);
 
-        // Create Database instance and test it through logcat
+        // Initialize Database instance for persistent data access
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "pathseers-database")
                 .allowMainThreadQueries() // purely for testing can lead to big slow down with lots of data
                 .fallbackToDestructiveMigration() // will cause all data to be lost on schema change, which is fine since we only have test data
                 .build();
-         //DataTest.TestDatabase(db); // just using this script to test if the database queries are working
 
         userDao = db.userDao();
 

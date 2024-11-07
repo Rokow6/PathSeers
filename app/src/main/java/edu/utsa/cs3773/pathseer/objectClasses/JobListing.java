@@ -12,6 +12,7 @@ public class JobListing {
     private ArrayList<String> benefits;
     private ArrayList<String> requirements;
     private ArrayList<String> responsibilities;
+    private ArrayList<String> tags;
     private AppDatabase db;
     private int employerID;
 
@@ -35,6 +36,7 @@ public class JobListing {
         benefits = new ArrayList<String>();
         requirements = new ArrayList<String>();
         responsibilities = new ArrayList<String>();
+        tags = new ArrayList<String>();
     }
 
     // Returns the ID of the JobListing
@@ -114,5 +116,15 @@ public class JobListing {
     // Adds a responsibility to the ArrayList for the JobListing
     public void addResponsibility(String responsibility) {
         responsibilities.add(responsibility);
+    }
+
+    // Returns the ArrayList of tags for the JobListing
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    // Adds a tag to the ArrayList for the JobListing
+    public void addTag(String tag) {
+        tags.add(tag);
     }
 }

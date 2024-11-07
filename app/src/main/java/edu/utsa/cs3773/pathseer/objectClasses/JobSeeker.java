@@ -11,37 +11,55 @@ public class JobSeeker extends User {
     private ArrayList<JobListing> applications;
     private AppDatabase db;
 
+    // Creates default JobSeeker
     public JobSeeker(AppDatabase db) {
         super(db);
         this.db = db;
         applications = new ArrayList<JobListing>();
+
+        db.jobSeekerDao().addJobSeekerData(getJobSeekerID(), "");
     }
 
+    // Creates a JobSeeker with an age, name, bio, username, and password
     public JobSeeker(int age, String name, String bio, String username, String password, AppDatabase db) throws NoSuchAlgorithmException {
         super(age, name, bio, username, password, db);
         this.db = db;
         applications = new ArrayList<JobListing>();
+
+        db.jobSeekerDao().addJobSeekerData(getJobSeekerID(), "");
     }
 
+    // Creates a JobSeeker with an age, name, bio, username, password, and Resume
     public JobSeeker(int age, String name, String bio, String username, String password, AppDatabase db, Resume resume) throws NoSuchAlgorithmException {
         super(age, name, bio, username, password, db);
         this.db = db;
         this.resume = resume;
         applications = new ArrayList<JobListing>();
+
+        db.jobSeekerDao().addJobSeekerData(getJobSeekerID(), "");
     }
 
+    // Returns the ID of the JobSeeker
+    public int getJobSeekerID() {
+        return db.jobSeekerDao().getJobSeekerIDFromUserID(db.userDao().getUserIDFromUsername(getUsername()));
+    }
+
+    // Returns the Resume of the JobSeeker
     public Resume getResume() {
         return resume;
     }
 
+    // Sets the Resume of the JobSeeker
     public void setResume(Resume resume) {
         this.resume = resume;
     }
 
+    // Returns the ArrayList of JobListings that the JobSeeker applied for
     public ArrayList<JobListing> getApplications() {
         return applications;
     }
 
+    // Adds a JobListing to the ArrayList for when a JobSeeker applies for a listing
     public void addApplication(JobListing job) {
         applications.add(job);
     }

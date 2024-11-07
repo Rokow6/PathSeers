@@ -19,6 +19,9 @@ public class UserData {
     @ColumnInfo(name = "bio")
     public String bio;
 
+    @ColumnInfo(name = "email")
+    public String email;
+
     @ColumnInfo(name = "username")
     public String username;
 

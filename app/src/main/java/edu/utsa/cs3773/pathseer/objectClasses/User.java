@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import edu.utsa.cs3773.pathseer.Encryptor;
+import edu.utsa.cs3773.pathseer.data.AppDatabase;
 import edu.utsa.cs3773.pathseer.data.UserDao;
 
 public class User {
@@ -15,29 +16,32 @@ public class User {
     private String username;
     private String password;
     private ArrayList<Notification> notifications;
-    private UserDao userDao;
+    private AppDatabase db;
 
-    public User() {
+    public User(AppDatabase db) {
+        this.db = db;
         notifications = new ArrayList<Notification>();
+
+        db.userDao().addUserData(0, "", "", "", "", "");
     }
 
-    public User(int age, String name, String bio, String username, String password, UserDao userDao) throws NoSuchAlgorithmException {
+    public User(int age, String name, String bio, String username, String password, AppDatabase db) throws NoSuchAlgorithmException {
         this.age = age;
         this.name = name;
         this.bio = bio;
         this.username = username;
         notifications = new ArrayList<Notification>();
-        this.userDao = userDao;
+        this.db = db;
 
-        userDao.addUserData(age, name, bio, username, "", "");
+        db.userDao().addUserData(age, name, bio, username, "", "");
 
-        this.password = Encryptor.encryptString(password, userDao.getUserIDFromUsername(this.username), userDao);
+        this.password = Encryptor.encryptString(password, db.userDao().getUserIDFromUsername(this.username), db.userDao());
 
-        userDao.updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, userDao.getUserDataByID(getID()).salt);
+        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     public int getID() {
-        return userDao.getUserIDFromUsername(username);
+        return db.userDao().getUserIDFromUsername(username);
     }
 
     public int getAge() {
@@ -46,7 +50,7 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
-        userDao.updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, userDao.getUserDataByID(getID()).salt);
+        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     public String getName() {
@@ -55,7 +59,7 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-        userDao.updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, userDao.getUserDataByID(getID()).salt);
+        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     public String getBio() {
@@ -64,7 +68,7 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
-        userDao.updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, userDao.getUserDataByID(getID()).salt);
+        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     public String getUsername() {
@@ -73,7 +77,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-        userDao.updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, userDao.getUserDataByID(getID()).salt);
+        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     // needs to change to check if password input matches hash in the database
@@ -83,9 +87,9 @@ public class User {
     }
 
     public void setPassword(String password) throws NoSuchAlgorithmException {
-        String hashedPass = Encryptor.encryptString(password, getID(), userDao); //need to store hash in the database
+        String hashedPass = Encryptor.encryptString(password, getID(), db.userDao()); //need to store hash in the database
         this.password = hashedPass; // prolly don't need this idk
-        userDao.updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, userDao.getUserDataByID(getID()).salt);
+        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     public ArrayList<Notification> getNotifications() {

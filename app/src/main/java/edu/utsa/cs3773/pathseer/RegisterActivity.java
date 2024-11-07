@@ -9,14 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
-import edu.utsa.cs3773.pathseer.data.UserDao;
 import edu.utsa.cs3773.pathseer.objectClasses.User;
 import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText nameInput, ageInput, bioInput,usernameInput, passwordInput;
     private Button registerButton;
-    private UserDao userDao;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInput);
         registerButton = findViewById(R.id.registerButton);
 
-        userDao = MainActivity.db.userDao();
+        db = MainActivity.db;
 
         //Set up register button click listener
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -56,13 +55,13 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordInput.getText().toString();
 
         //Check if username already exists
-        if (userDao.getUserIDFromUsername(username) != 0) {
+        if (db.userDao().getUserIDFromUsername(username) != 0) {
             Toast.makeText(this, "Username already exists. Please choose a different one.", Toast.LENGTH_SHORT).show();
             return;
         }
         try {
             //Create a new User instance
-            User newUser = new User(age, name, bio, username, password, userDao);
+            User newUser = new User(age, name, bio, username, password, db);
             //If successful
             Toast.makeText(this, "User registered successfully!", Toast.LENGTH_SHORT).show();
             finish();

@@ -2,6 +2,8 @@ package edu.utsa.cs3773.pathseer.objectClasses;
 
 import java.util.*;
 
+import edu.utsa.cs3773.pathseer.data.AppDatabase;
+
 public class JobListing {
     private String title;
     private String location;
@@ -10,21 +12,31 @@ public class JobListing {
     private ArrayList<String> benefits;
     private ArrayList<String> requirements;
     private ArrayList<String> responsibilities;
+    private AppDatabase db;
+    private int employerID;
 
-    public JobListing() {
+    public JobListing(AppDatabase db, int employerID) {
+        benefits = new ArrayList<String>();
+        requirements = new ArrayList<String>();
+        responsibilities = new ArrayList<String>();
+        this.db = db;
+        this.employerID = employerID;
+    }
+
+    public JobListing(String title, String location, String description, double pay, AppDatabase db, int employerID) {
+        this.title = title;
+        this.location =  location;
+        this.description = description;
+        this.pay = pay;
+        this.db = db;
+        this.employerID = employerID;
         benefits = new ArrayList<String>();
         requirements = new ArrayList<String>();
         responsibilities = new ArrayList<String>();
     }
 
-    public JobListing(String title, String location, String description, double pay) {
-        this.title = title;
-        this.location =  location;
-        this.description = description;
-        this.pay = pay;
-        benefits = new ArrayList<String>();
-        requirements = new ArrayList<String>();
-        responsibilities = new ArrayList<String>();
+    public int getJobListingID() {
+        return db.jobListingDao().getJobListingIDFromData(employerID, title);
     }
 
     public String getTitle() {
@@ -33,6 +45,7 @@ public class JobListing {
 
     public void setTitle(String title) {
         this.title = title;
+        db.jobListingDao().updateJobListingByID(getJobListingID(), this.title, this.location, this.description, this.pay);
     }
 
     public String getLocation() {
@@ -41,6 +54,7 @@ public class JobListing {
 
     public void setLocation(String location) {
         this.location = location;
+        db.jobListingDao().updateJobListingByID(getJobListingID(), this.title, this.location, this.description, this.pay);
     }
 
     public String getDescription() {
@@ -49,6 +63,7 @@ public class JobListing {
 
     public void setDescription(String description) {
         this.description = description;
+        db.jobListingDao().updateJobListingByID(getJobListingID(), this.title, this.location, this.description, this.pay);
     }
 
     public double getPay() {
@@ -57,6 +72,7 @@ public class JobListing {
 
     public void setPay(double pay) {
         this.pay = pay;
+        db.jobListingDao().updateJobListingByID(getJobListingID(), this.title, this.location, this.description, this.pay);
     }
 
     public ArrayList<String> getBenefits() {

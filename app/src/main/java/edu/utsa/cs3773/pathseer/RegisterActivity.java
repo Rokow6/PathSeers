@@ -68,8 +68,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         try {
-            // Hash the password (using SHA-256 as an example)
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            // Hash the password (using MD5 as an example)
+            MessageDigest digest = MessageDigest.getInstance("MD5");
             byte[] hashedPassword = digest.digest(password.getBytes());
             String hashedPasswordString = new String(hashedPassword);
 

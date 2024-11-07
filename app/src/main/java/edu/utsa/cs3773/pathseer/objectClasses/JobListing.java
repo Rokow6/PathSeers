@@ -24,6 +24,8 @@ public class JobListing {
         tags = new ArrayList<String>();
         this.db = db;
         this.employerID = employerID;
+
+        db.jobListingDao().addJobListingData(employerID, "", "", "", 0.0);
     }
 
     // Creates a JobListing with a title, location, description, and pay
@@ -38,6 +40,8 @@ public class JobListing {
         requirements = new ArrayList<String>();
         responsibilities = new ArrayList<String>();
         tags = new ArrayList<String>();
+
+        db.jobListingDao().addJobListingData(employerID, title, location, description, pay);
     }
 
     // Returns the ID of the JobListing
@@ -97,6 +101,7 @@ public class JobListing {
     // Adds a benefit to the ArrayList for the JobListing
     public void addBenefit(String benefit) {
         benefits.add(benefit);
+        db.benefitDao().addBenefitData(getJobListingID(), benefit);
     }
 
     // Returns the ArrayList of requirements for the JobListing
@@ -107,6 +112,7 @@ public class JobListing {
     // Adds a requirement to the ArrayList for the JobListing
     public void addRequirement(String requirement) {
         requirements.add(requirement);
+        db.requirementDao().addRequirementData(getJobListingID(), requirement);
     }
 
     // Returns the ArrayList of responsibilities for the JobListing
@@ -117,6 +123,7 @@ public class JobListing {
     // Adds a responsibility to the ArrayList for the JobListing
     public void addResponsibility(String responsibility) {
         responsibilities.add(responsibility);
+        db.responsibilityDao().addResponsibilityData(getJobListingID(), responsibility);
     }
 
     // Returns the ArrayList of tags for the JobListing
@@ -127,5 +134,6 @@ public class JobListing {
     // Adds a tag to the ArrayList for the JobListing
     public void addTag(String tag) {
         tags.add(tag);
+        db.tagDao().addTagData(tag);
     }
 }

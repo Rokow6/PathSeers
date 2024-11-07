@@ -1,6 +1,8 @@
 package edu.utsa.cs3773.pathseer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
             //Compare hashed password
             if (hashedEnteredPass.equals(userData.password)) {
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+
+                saveUserID(username);
+
                 Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(intent);
                 finish();
@@ -95,5 +100,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "An error occurred during login.", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void saveUserID(String username) {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("user_id", db.userDao().getUserIDFromUsername(username));
+        editor.apply();
     }
 }

@@ -23,9 +23,9 @@ public class JobSeeker extends User {
         db.jobSeekerDao().addJobSeekerData(getJobSeekerID(), "");
     }
 
-    // Creates a JobSeeker with an age, name, bio, username, and password
-    public JobSeeker(int age, String name, String bio, String username, String password, AppDatabase db) throws NoSuchAlgorithmException {
-        super(age, name, bio, username, password, db);
+    // Creates a JobSeeker with an age, name, bio, email, username, and password
+    public JobSeeker(int age, String name, String bio, String email, String username, String password, AppDatabase db) throws NoSuchAlgorithmException {
+        super(age, name, bio, email, username, password, db);
         this.db = db;
         applications = new ArrayList<JobListing>();
         savedJobs = new ArrayList<JobListing>();
@@ -34,8 +34,8 @@ public class JobSeeker extends User {
     }
 
     // Creates a JobSeeker with an age, name, bio, username, password, and Resume
-    public JobSeeker(int age, String name, String bio, String username, String password, AppDatabase db, Resume resume) throws NoSuchAlgorithmException {
-        super(age, name, bio, username, password, db);
+    public JobSeeker(int age, String name, String bio, String email, String username, String password, AppDatabase db, Resume resume) throws NoSuchAlgorithmException {
+        super(age, name, bio, email, username, password, db);
         this.db = db;
         this.resume = resume;
         applications = new ArrayList<JobListing>();

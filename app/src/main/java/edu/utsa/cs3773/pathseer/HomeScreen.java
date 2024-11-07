@@ -1,6 +1,9 @@
 package edu.utsa.cs3773.pathseer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,5 +18,15 @@ public class HomeScreen extends NavigationActivity {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_home_screen, findViewById(R.id.content_frame));
 
+        Button createJobPosting = findViewById(R.id.createJobPosting);
+
+        createJobPosting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreen.this, PostJobScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

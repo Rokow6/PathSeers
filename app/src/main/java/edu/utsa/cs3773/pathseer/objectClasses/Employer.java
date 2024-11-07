@@ -18,9 +18,9 @@ public class Employer extends User {
         db.employerDao().addEmployerData(getID());
     }
 
-    // Creates an Employer with an age, name, bio, username, and password
-    public Employer(int age, String name, String bio, String username, String password, AppDatabase db) throws NoSuchAlgorithmException {
-        super(age, name, bio, username, password, db);
+    // Creates an Employer with an age, name, bio, email, username, and password
+    public Employer(int age, String name, String bio, String email, String username, String password, AppDatabase db) throws NoSuchAlgorithmException {
+        super(age, name, bio, email, username, password, db);
         jobPostings = new ArrayList<JobListing>();
         this.db = db;
 
@@ -35,14 +35,10 @@ public class Employer extends User {
     // Creates a default JobPosting and adds it to the Employer's jobPosting ArrayList
     public void createJobPosting() {
         jobPostings.add(new JobListing(db, getEmployerID()));
-
-        db.jobListingDao().addJobListingData(db.userDao().getUserIDFromUsername(super.getUsername()), "", "", "", 0.0);
     }
 
     // Creates a JobPosting with a title, location, description, and pay and adds it to the Employer's jobPosting ArrayList
     public void createJobPosting(String title, String location, String description, double pay) {
         jobPostings.add(new JobListing(title, location, description, pay, db, getEmployerID()));
-
-        db.jobListingDao().addJobListingData(db.userDao().getUserIDFromUsername(super.getUsername()), title, location, description, pay);
     }
 }

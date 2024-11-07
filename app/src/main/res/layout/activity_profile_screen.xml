@@ -1,23 +1,363 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileScreen">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="356dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginBottom="356dp"
-        android:text="Profile Screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
+
+        <!-- Profile Picture and Edit Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/profilePicture"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/circle_background"
+                android:gravity="center"
+                android:text="AB"
+                android:textSize="24sp"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/editProfilePictureButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Edit"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <!-- Name Section -->
+        <EditText
+            android:id="@+id/input_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background" />
+
+        <!-- Contact Information -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="24dp">
+
+            <TextView
+                android:id="@+id/contactInfoHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Information"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/editContactInfoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Edit"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="user@example.com"
+            android:padding="8dp" />
+
+        <!-- Work Experience Section -->
+        <TextView
+            android:id="@+id/workExperienceHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work experience"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="24dp" />
+
+        <TextView
+            android:id="@+id/workExperienceDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tell hiring managers about all your accomplishments and responsibilities at previous jobs and internships." />
+
+        <Button
+            android:id="@+id/addWorkExperienceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Work Experience"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- Education Section -->
+        <TextView
+            android:id="@+id/eduacationHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Education"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="24dp" />
+
+        <TextView
+            android:id="@+id/eduationDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let hiring managers know about any high school, undergraduate, or postgraduate degrees." />
+
+        <Button
+            android:id="@+id/addEducationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Education"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- Resume Section -->
+        <TextView
+            android:id="@+id/resumesHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resume"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="24dp" />
+
+        <Button
+            android:id="@+id/addResumeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Resume"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- Skills Section -->
+        <TextView
+            android:id="@+id/ResumeHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skills"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="24dp" />
+
+        <TextView
+            android:id="@+id/resumeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add skills to your profile to highlight your professional knowledge and stand out to prospective employers!." />
+
+        <Button
+            android:id="@+id/addSkillsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Skills"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- Licenses Section -->
+        <TextView
+            android:id="@+id/licensesHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Certificates and licenses"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="24dp" />
+
+        <Button
+            android:id="@+id/addlicenseseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Certificates and licenses"
+            android:textColor="@color/colorPrimary" />
+
+        <!-- More Information Section Header with Edit Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp"
+            android:paddingTop="24dp">
+
+            <TextView
+                android:id="@+id/moreInfoHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More information"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/editMoreInfoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Edit"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <!-- Information Rows -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Minimum Desired Salary -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Minimum desired salary"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Not specified"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <!-- Years of Experience -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Years of experience"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="None"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <!-- Highest Degree Earned -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Highest degree earned"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="None"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <!-- Industry -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Industry"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="None"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <!-- Veteran Status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Veteran status"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="None"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <!-- Additional Sections -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Add Executive Summary"
+                android:textColor="@color/colorPrimary"
+                android:paddingTop="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Add Objective"
+                android:textColor="@color/colorPrimary"
+                android:paddingTop="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Add Achievements"
+                android:textColor="@color/colorPrimary"
+                android:paddingTop="8dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Add Associations"
+                android:textColor="@color/colorPrimary"
+                android:paddingTop="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

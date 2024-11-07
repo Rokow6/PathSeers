@@ -1,73 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FFFFFF"
     tools:context=".RegisterActivity">
 
-    <EditText
-        android:id="@+id/nameInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Logo and App Name -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="App Logo" />
 
-    <EditText
-        android:id="@+id/ageInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Age"
-        android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@id/nameInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
-    <EditText
-        android:id="@+id/bioInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter your bio"
-        android:inputType="textMultiLine"
-        android:gravity="top"
-        android:minLines="3"
-        app:layout_constraintTop_toBottomOf="@id/ageInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
-    <EditText
-        android:id="@+id/usernameInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        app:layout_constraintTop_toBottomOf="@id/bioInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
 
-    <EditText
-        android:id="@+id/passwordInput"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/usernameInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:text="PathSeer"
+        android:textSize="30sp"
+        android:textColor="#00796B"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal" />
 
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up to account and find your job"
+        android:textSize="14sp"
+        android:textColor="#808080"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Full Name Input -->
+    <EditText
+        android:id="@+id/input_full_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your full name"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:inputType="textPersonName" />
+
+    <!-- Username Input -->
+    <EditText
+        android:id="@+id/input_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your username"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:inputType="textPersonName" />
+
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your email"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:inputType="textEmailAddress" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your password"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:inputType="textPassword" />
+
+    <!-- Confirm Password Input -->
+    <EditText
+        android:id="@+id/input_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="24dp"
+        android:hint="Confirm your password"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:inputType="textPassword" />
+
+    <!-- Sign Up Button -->
     <Button
-        android:id="@+id/registerButton"
-        android:layout_width="0dp"
+        android:id="@+id/button_sign_up"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        app:layout_constraintTop_toBottomOf="@id/passwordInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:text="Sign Up"
+        android:backgroundTint="#00796B"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:layout_gravity="center_horizontal" />
 
+    <!-- Already have an account? Sign In Button -->
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00796B"
+        android:padding="12dp"
+        android:text="Already have an account? Sign In"
+        android:textColor="#FFFFFF" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

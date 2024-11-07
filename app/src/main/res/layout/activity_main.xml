@@ -81,11 +81,11 @@
         android:id="@+id/button_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
-        android:text="Register"
         android:backgroundTint="#00796B"
-        android:textColor="#FFFFFF"
         android:padding="12dp"
-        android:layout_gravity="center_horizontal" />
+        android:text="Register"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

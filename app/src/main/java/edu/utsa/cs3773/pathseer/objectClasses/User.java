@@ -39,6 +39,9 @@ public class User {
         db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
+    public User(int i, String fullName, String email, String password) {
+    }
+
     // Returns the ID of the User
     public int getID() {
         return db.userDao().getUserIDFromUsername(username);

@@ -21,6 +21,7 @@ public class JobListing {
         benefits = new ArrayList<String>();
         requirements = new ArrayList<String>();
         responsibilities = new ArrayList<String>();
+        tags = new ArrayList<String>();
         this.db = db;
         this.employerID = employerID;
     }

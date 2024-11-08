@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
+import edu.utsa.cs3773.pathseer.data.DataTest;
 import edu.utsa.cs3773.pathseer.data.UserDao;
 import edu.utsa.cs3773.pathseer.data.UserData;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries() // purely for testing can lead to big slow down with lots of data
                 .fallbackToDestructiveMigration() // will cause all data to be lost on schema change, which is fine since we only have test data
                 .build();
+        DatabaseInitializer.initializeDatabase(db); // initialize empty database tables
 
         userDao = db.userDao();
 

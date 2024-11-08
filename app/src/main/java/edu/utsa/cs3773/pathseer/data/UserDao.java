@@ -43,6 +43,10 @@ public interface UserDao {
     void updateUserData(int userID, int age, String name, String bio, String email, String username, String password, String salt);
 
     // Updates the salt of a user
-    @Query(("UPDATE UserData SET salt = :salt WHERE userID = (:userID)"))
+    @Query("UPDATE UserData SET salt = :salt WHERE userID = (:userID)")
     void updateSalt(int userID, String salt);
+
+    // Updates the password of a user
+    @Query("UPDATE UserData SET password = :password WHERE userID = (:userID)")
+    void updatePassword(int userID, String password);
 }

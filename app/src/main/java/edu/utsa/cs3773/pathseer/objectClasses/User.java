@@ -38,7 +38,9 @@ public class User {
 
         this.password = Encryptor.encryptString(password, db.userDao().getUserIDFromUsername(this.username), db.userDao());
 
-        db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.email, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
+        db.userDao().updatePassword(getID(), this.password);
+        // leaving this function here in case the above one doesn't work
+        // db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.email, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
     }
 
     public User(int i, String fullName, String email, String password) {

@@ -46,4 +46,16 @@ public class Encryptor {
         //String saltStr = salt.toString();
         return salt.toString();
     }
+    //Made this public until I can figure out why it is not registering users properly
+    public static String getNewUserSaltString() {
+        // Generates random string for hash
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        return salt.toString();
+    }
 }

@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.pathseer.data;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public interface UserDao {
     @Query("SELECT userID FROM UserData WHERE username = (:username)")
     int getUserIDFromUsername(String username);
 
+    //returns the UserID of a user based on their current email; returns 0 if user does not exist
+    @Query("SELECT userID FROM UserData WHERE email = (:email)")
+    int getUserIDFromEmail(String email);
+
     //Returns the user data for a specified username
     @Query("SELECT * FROM UserData WHERE username = :username")
     UserData getUserDataByUsername(String username);
@@ -29,6 +34,10 @@ public interface UserDao {
     // (You may need to just pass in an empty string for anything that's currently blank)
     @Query("INSERT INTO UserData (age,name,bio,email,username,password,salt) VALUES (:age,:name,:bio,:email,:username,:password,:salt)")
     void addUserData(int age, String name, String bio, String email, String username, String password, String salt);
+
+    // Adds a new user to the database
+    @Insert
+    void addUserData(UserData user);
 
 
     // Deletes a user from the database

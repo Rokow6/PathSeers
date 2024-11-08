@@ -5,16 +5,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
+import edu.utsa.cs3773.pathseer.data.UserDao;
+import edu.utsa.cs3773.pathseer.data.UserData;
 import edu.utsa.cs3773.pathseer.objectClasses.User;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText fullNameInput, emailInput, passwordInput, confirmPasswordInput;
+    private EditText fullNameInput, emailInput, usernameInput, passwordInput, confirmPasswordInput;
     private Button registerButton;
     private AppDatabase db;
+    private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         db = MainActivity.db;
+        userDao = db.userDao();
 
         // Initialize views
         initializeViews();
@@ -38,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void initializeViews() {
         fullNameInput = findViewById(R.id.input_full_name);
         emailInput = findViewById(R.id.input_email);
+        usernameInput = findViewById(R.id.input_username);
         passwordInput = findViewById(R.id.input_password);
         confirmPasswordInput = findViewById(R.id.input_confirm_password);
         registerButton = findViewById(R.id.button_sign_up);
@@ -46,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser() {
         String fullName = fullNameInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
+        String username = usernameInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
         String confirmPassword = confirmPasswordInput.getText().toString().trim();
 
@@ -61,25 +70,40 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Check if the username already exists in the database
+        if (db.userDao().getUserIDFromUsername(username) != 0) {
+            showToast("Username already registered. Please log in.");
+            return;
+        }
+
         // Check if the email already exists in the database
-        if (db.userDao().getUserIDFromUsername(email) != 0) {
+        if (db.userDao().getUserIDFromEmail(email) != 0) {
             showToast("Email already registered. Please log in.");
             return;
         }
 
         try {
-            // Hash the password (using MD5 as an example)
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            byte[] hashedPassword = digest.digest(password.getBytes());
-            String hashedPasswordString = new String(hashedPassword);
+            //Generate salt
+            String salt = Encryptor.getNewUserSaltString();
+            // Encrypt the password and get the salt
+            String hashedPassword = Encryptor.encryptString(password, salt);
 
-            // Create a new User instance with the hashed password
-            User newUser = new User(0, fullName, email, hashedPasswordString);
-            //db.userDao().insert(newUser);  // Save the new user in the database
+            // Prepare a new UserData object
+            UserData newUser = new UserData();
+            newUser.name = fullName;
+            newUser.email = email;
+            newUser.username = username;
+            newUser.password = hashedPassword; // Store the hashed password
+            newUser.salt = salt;               // Store the salt
 
-            // Show success message and finish activity
-            showToast("User registered successfully!");
-            finish(); // Close the activity
+
+            // Save the user data into the database
+            new Thread(() -> {
+                userDao.addUserData(newUser);  // Insert the user
+                runOnUiThread(() -> showToast("User registered successfully!"));
+                finish();
+            }).start();
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             showToast("Error occurred while creating account.");

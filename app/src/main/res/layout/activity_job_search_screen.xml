@@ -1,25 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF"
     tools:context=".JobSearchScreen">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/et_search_job"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Job title, company, or industry"
+        android:background="@drawable/search_edit_text_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:drawableEnd="@drawable/ic_search"
+        android:textSize="16sp"
+        android:textColor="#00796B"
+        android:textColorHint="#808080" />
+
+    <!-- Filter Options -->
+    <LinearLayout
+        android:id="@+id/filter_options_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="178dp"
-        android:layout_marginTop="359dp"
-        android:layout_marginEnd="175dp"
-        android:layout_marginBottom="353dp"
-        android:text="Job Search Screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:background="@drawable/search_edit_text_background"
+            android:text="Pay"
+            android:textColor="#00796B"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_hours"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:background="@drawable/search_edit_text_background"
+            android:text="Hours"
+            android:textColor="#00796B"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_experience"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:background="@drawable/search_edit_text_background"
+            android:text="Experience"
+            android:textColor="#00796B"
+            android:textSize="14sp" />
+
+        <!-- Filter Icon Button -->
+        <ImageButton
+            android:id="@+id/btn_filter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@color/black"
+            android:contentDescription="Filter"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <!-- Job List (RecyclerView to display multiple jobs) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewJobs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical" />
+
+</LinearLayout>

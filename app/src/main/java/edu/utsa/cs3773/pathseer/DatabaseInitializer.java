@@ -139,11 +139,11 @@ public class DatabaseInitializer {
     // Inserts requirement data
     private static void initializeRequirementData(AppDatabase db) {
         // Add test requirement to job listing 1
-        db.benefitDao().addBenefitData(
+        db.requirementDao().addRequirementData(
                 db.jobListingDao().getJobListingIDFromData(db.employerDao().getEmployerIDFromUserID(db.userDao().getUserIDFromUsername("employer")), "Test Job Listing 1"),
                 "Requirement1");
         // Add test requirement to job listing 2
-        db.benefitDao().addBenefitData(
+        db.requirementDao().addRequirementData(
                 db.jobListingDao().getJobListingIDFromData(db.employerDao().getEmployerIDFromUserID(db.userDao().getUserIDFromUsername("employer")), "Test Job Listing 2"),
                 "Requirement2");
     }
@@ -151,11 +151,11 @@ public class DatabaseInitializer {
     // Inserts responsibility data
     private static void initializeResponsibilityData(AppDatabase db) {
         // Add test responsibility to job listing 1
-        db.benefitDao().addBenefitData(
+        db.responsibilityDao().addResponsibilityData(
                 db.jobListingDao().getJobListingIDFromData(db.employerDao().getEmployerIDFromUserID(db.userDao().getUserIDFromUsername("employer")), "Test Job Listing 1"),
                 "Responsibility1");
         // Add test responsibility to job listing 2
-        db.benefitDao().addBenefitData(
+        db.responsibilityDao().addResponsibilityData(
                 db.jobListingDao().getJobListingIDFromData(db.employerDao().getEmployerIDFromUserID(db.userDao().getUserIDFromUsername("employer")), "Test Job Listing 2"),
                 "Responsibility2");
     }

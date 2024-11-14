@@ -22,7 +22,8 @@ public class PostJobScreen extends NavigationActivity {
 
     private EditText titleInput, locationInput, descriptionInput, payInput, benefitInput, requirementInput, responsibilityInput, tagInput;
     private Button addBenefit, addRequirement, addResponsibility, addTag, publishJobListing;
-    private LinearLayout benefitLayout, requirementLayout, responsibilityLayout, tagLayout;
+    private LinearLayout postJobListingLayout, benefitLayout, removeBenefitLayout, requirementLayout, removeRequirementLayout,
+            responsibilityLayout, removeResponsibilityLayout, tagLayout, removeTagLayout;
     private ArrayList<TextView> benefitsTextView = new ArrayList<TextView>();
     private ArrayList<TextView> requirementsTextView = new ArrayList<TextView>();
     private ArrayList<TextView> responsibilitiesTextView = new ArrayList<TextView>();
@@ -57,10 +58,11 @@ public class PostJobScreen extends NavigationActivity {
 
                     @Override
                     public void onClick(View v) {
+                        benefitsTextView.remove(textOut);
                         ((LinearLayout)addView.getParent()).removeView(addView);
                     }});
 
-                benefitLayout.addView(addView);
+                removeBenefitLayout.addView(addView);
             }});
 
         addRequirement.setOnClickListener(new View.OnClickListener(){
@@ -80,10 +82,11 @@ public class PostJobScreen extends NavigationActivity {
 
                     @Override
                     public void onClick(View v) {
+                        requirementsTextView.remove(textOut);
                         ((LinearLayout)addView.getParent()).removeView(addView);
                     }});
 
-                requirementLayout.addView(addView);
+                removeRequirementLayout.addView(addView);
             }});
 
         addResponsibility.setOnClickListener(new View.OnClickListener(){
@@ -103,10 +106,11 @@ public class PostJobScreen extends NavigationActivity {
 
                     @Override
                     public void onClick(View v) {
+                        responsibilitiesTextView.remove(textOut);
                         ((LinearLayout)addView.getParent()).removeView(addView);
                     }});
 
-                responsibilityLayout.addView(addView);
+                removeResponsibilityLayout.addView(addView);
             }});
 
         addTag.setOnClickListener(new View.OnClickListener(){
@@ -126,10 +130,11 @@ public class PostJobScreen extends NavigationActivity {
 
                     @Override
                     public void onClick(View v) {
+                        tagsTextView.remove(textOut);
                         ((LinearLayout)addView.getParent()).removeView(addView);
                     }});
 
-                tagLayout.addView(addView);
+                removeTagLayout.addView(addView);
             }});
 
         publishJobListing.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +146,7 @@ public class PostJobScreen extends NavigationActivity {
     }
 
     private void initializeViews() {
+        postJobListingLayout = findViewById(R.id.postJobLisingLayout);
         titleInput = findViewById(R.id.titleInput);
         locationInput = findViewById(R.id.locationInput);
         descriptionInput = findViewById(R.id.descriptionInput);
@@ -148,15 +154,19 @@ public class PostJobScreen extends NavigationActivity {
         benefitInput = (EditText)findViewById(R.id.benefitInput);
         addBenefit = (Button)findViewById(R.id.addBenefit);
         benefitLayout = (LinearLayout)findViewById(R.id.benefitLayout);
+        removeBenefitLayout = (LinearLayout)findViewById(R.id.removeBenefitLayout);
         requirementInput = (EditText)findViewById(R.id.requirementInput);
         addRequirement = (Button)findViewById(R.id.addRequirement);
         requirementLayout = (LinearLayout)findViewById(R.id.requirementLayout);
+        removeRequirementLayout = (LinearLayout)findViewById(R.id.removeRequirementLayout);
         responsibilityInput = (EditText)findViewById(R.id.responsibilityInput);
         addResponsibility = (Button)findViewById(R.id.addResponsibility);
         responsibilityLayout = (LinearLayout)findViewById(R.id.responsibilityLayout);
+        removeResponsibilityLayout = (LinearLayout)findViewById(R.id.removeResponsibilityLayout);
         tagInput = (EditText)findViewById(R.id.tagInput);
         addTag = (Button)findViewById(R.id.addTag);
         tagLayout = (LinearLayout)findViewById(R.id.tagLayout);
+        removeTagLayout = (LinearLayout)findViewById(R.id.removeTagLayout);
         publishJobListing = findViewById(R.id.addJobListing);
     }
 

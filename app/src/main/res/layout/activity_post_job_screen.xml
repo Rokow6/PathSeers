@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/postJobLisingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -49,7 +50,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
                 android:hint="Enter the pay for the job"
-                android:inputType="number"/>
+                android:inputType="number" />
 
             <LinearLayout
                 android:id="@+id/benefitLayout"
@@ -73,6 +74,12 @@
                     android:text="Add"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/removeBenefitLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:id="@+id/requirementLayout"
@@ -99,6 +106,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/removeRequirementLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/responsibilityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -121,6 +134,12 @@
                     android:text="Add"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/removeResponsibilityLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:id="@+id/tagLayout"
@@ -146,6 +165,12 @@
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/removeTagLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
             <Button
                 android:id="@+id/addJobListing"
                 android:layout_width="match_parent"
@@ -154,6 +179,10 @@
                 android:backgroundTint="#00796B"
                 android:text="Publish Job Listing"
                 android:textColor="#FFFFFF" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
         </LinearLayout>
     </ScrollView>
 

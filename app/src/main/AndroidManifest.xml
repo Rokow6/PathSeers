@@ -19,6 +19,9 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".PostJobScreen"
+            android:exported="false" />
+        <activity
             android:name=".SettingsScreen"
             android:exported="false" />
         <activity

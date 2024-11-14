@@ -28,7 +28,7 @@ public class PostJobScreen extends NavigationActivity {
     private ArrayList<TextView> responsibilitiesTextView = new ArrayList<TextView>();
     private ArrayList<TextView> tagsTextView = new ArrayList<TextView>();
     private AppDatabase db;
-    private SharedPreferences sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class PostJobScreen extends NavigationActivity {
         getLayoutInflater().inflate(R.layout.activity_post_job_screen, findViewById(R.id.content_frame));
 
         db = MainActivity.db;
+        sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
 
         initializeViews();
 

@@ -16,10 +16,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="55dp" />
+
             <EditText
                 android:id="@+id/titleInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:hint="Enter Title" />
 
             <EditText
@@ -27,8 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                android:hint="Enter Location"
-                android:inputType="number" />
+                android:hint="Enter Location" />
 
             <EditText
                 android:id="@+id/descriptionInput"
@@ -45,7 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                android:hint="Enter the pay for the job" />
+                android:hint="Enter the pay for the job"
+                android:inputType="number"/>
 
             <LinearLayout
                 android:id="@+id/benefitLayout"
@@ -58,8 +62,7 @@
                     android:layout_width="312dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
-                    android:hint="Add Benefit"
-                    android:inputType="textPassword" />
+                    android:hint="Add Benefit" />
 
                 <Button
                     android:id="@+id/addBenefit"
@@ -83,8 +86,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:hint="Add Requirement"
-                    android:inputType="textPassword" />
+                    android:hint="Add Requirement" />
 
                 <Button
                     android:id="@+id/addRequirement"
@@ -100,7 +102,7 @@
                 android:id="@+id/responsibilityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/responsibilityInput"
@@ -108,8 +110,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:hint="Add Responsibility"
-                    android:inputType="textPassword" />
+                    android:hint="Add Responsibility" />
 
                 <Button
                     android:id="@+id/addResponsibility"
@@ -133,8 +134,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
-                    android:hint="Add Tag"
-                    android:inputType="textPassword" />
+                    android:hint="Add Tag" />
 
                 <Button
                     android:id="@+id/addTag"

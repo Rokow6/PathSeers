@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.pathseer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,23 +16,25 @@ import edu.utsa.cs3773.pathseer.objectClasses.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText fullNameInput, emailInput, usernameInput, passwordInput, confirmPasswordInput;
     private Button registerButton;
     private AppDatabase db;
     private UserDao userDao;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        db = MainActivity.db;
-        userDao = db.userDao();
-
         // Initialize views
         initializeViews();
+        db = AppDatabase.getInstance(this);
+        userDao = db.userDao();
 
         // Set up register button click listener
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -70,47 +73,62 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if the username already exists in the database
-        if (db.userDao().getUserIDFromUsername(username) != 0) {
-            showToast("Username already registered. Please log in.");
-            return;
-        }
+        executorService.execute(() -> {
+            // Check if username or email already exists
+            if (userDao.getUserIDFromUsername(username) != 0) {
+                runOnUiThread(() -> showToast("Username already registered. Please log in."));
+                return;
+            }
 
-        // Check if the email already exists in the database
-        if (db.userDao().getUserIDFromEmail(email) != 0) {
-            showToast("Email already registered. Please log in.");
-            return;
-        }
+            if (userDao.getUserIDFromEmail(email) != 0) {
+                runOnUiThread(() -> showToast("Email already registered. Please log in."));
+                return;
+            }
 
-        try {
-            //Generate salt
-            String salt = Encryptor.getNewUserSaltString();
-            // Encrypt the password and get the salt
-            String hashedPassword = Encryptor.encryptString(password, salt);
+            try {
+                //Add a user with placeholder values for password and salt
+                UserData tempUser = new UserData(0, fullName, "", email, username, "", "");
+                userDao.addUserData(tempUser);
 
-            // Prepare a new UserData object
-            UserData newUser = new UserData();
-            newUser.name = fullName;
-            newUser.email = email;
-            newUser.username = username;
-            newUser.password = hashedPassword; // Store the hashed password
-            newUser.salt = salt;               // Store the salt
+                //Retrieve the auto-generated userID
+                int userId = userDao.getUserIDFromUsername(username);
+                Log.d("RegisterActivity", "Generated User ID: " + userId);
+
+                //Generate hashed password and update salt via Encryptor
+                String hashedPassword = Encryptor.encryptString(password, userId, userDao);
+
+                //Fetch the updated salt from the database
+                String salt = userDao.getUserDataByID(userId).salt;
+                Log.d("RegisterActivity", "Retrieved Salt: " + salt);
+
+                //Update the hashed password in the database
+                userDao.updatePassword(userId, hashedPassword);
 
 
-            // Save the user data into the database
-            new Thread(() -> {
-                userDao.addUserData(newUser);  // Insert the user
-                runOnUiThread(() -> showToast("User registered successfully!"));
-                finish();
-            }).start();
+                runOnUiThread(() -> {
+                    Log.d("RegisterActivity", "User created successfully.");
+                    showToast("User registered successfully!");
+                    finish();
+                });
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                runOnUiThread(() -> {
+                    Log.e("RegisterActivity", "User could not be created.");
+                    showToast("Error occurred while creating account.");
+                });
+            }
+        });
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            showToast("Error occurred while creating account.");
-        }
     }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
+    }
+
 }

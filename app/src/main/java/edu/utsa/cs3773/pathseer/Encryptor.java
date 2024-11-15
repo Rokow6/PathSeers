@@ -1,5 +1,7 @@
 package edu.utsa.cs3773.pathseer;
 
+import android.util.Log;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,7 +16,7 @@ public class Encryptor {
         String salt = getSaltString();
 
         userDao.updateSalt(userID, salt);
-
+        Log.d("Encryptor", "Generated salt for userID " + userID + ": " + salt);
         String salted = input + salt;
 
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -44,18 +46,6 @@ public class Encryptor {
             salt.append(SALTCHARS.charAt(index));
         }
         //String saltStr = salt.toString();
-        return salt.toString();
-    }
-    //Made this public until I can figure out why it is not registering users properly
-    public static String getNewUserSaltString() {
-        // Generates random string for hash
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
         return salt.toString();
     }
 }

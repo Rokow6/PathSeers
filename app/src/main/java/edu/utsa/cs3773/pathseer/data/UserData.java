@@ -30,4 +30,15 @@ public class UserData {
 
     @ColumnInfo(name = "salt")
     public String salt;
+
+    // Constructor for creating UserData instances
+    public UserData(int age, String name, String bio, String email, String username, String password, String salt) {
+        this.age = age;
+        this.name = name;
+        this.bio = bio;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+    }
 }

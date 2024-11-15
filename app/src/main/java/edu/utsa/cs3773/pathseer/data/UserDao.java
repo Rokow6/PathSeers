@@ -3,6 +3,7 @@ package edu.utsa.cs3773.pathseer.data;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -35,10 +36,8 @@ public interface UserDao {
     @Query("INSERT INTO UserData (age,name,bio,email,username,password,salt) VALUES (:age,:name,:bio,:email,:username,:password,:salt)")
     void addUserData(int age, String name, String bio, String email, String username, String password, String salt);
 
-    // Adds a new user to the database
     @Insert
-    void addUserData(UserData user);
-
+    long addUserData(UserData userData);
 
     // Deletes a user from the database
     @Query("DELETE FROM UserData WHERE userID = (:userID)")
@@ -51,11 +50,15 @@ public interface UserDao {
     @Query("UPDATE UserData SET age = :age, name = :name, bio = :bio, email = :email, username = :username, password = :password, salt = :salt WHERE userID = (:userID)")
     void updateUserData(int userID, int age, String name, String bio, String email, String username, String password, String salt);
 
+    //Update all fields in UserData (including password and salt)
+    @Update
+    void updateUserData(UserData userData);
+
     // Updates the salt of a user
-    @Query("UPDATE UserData SET salt = :salt WHERE userID = (:userID)")
+    @Query("UPDATE UserData SET salt = :salt WHERE userID = :userID")
     void updateSalt(int userID, String salt);
 
     // Updates the password of a user
-    @Query("UPDATE UserData SET password = :password WHERE userID = (:userID)")
+    @Query("UPDATE UserData SET password = :password WHERE userID = :userID")
     void updatePassword(int userID, String password);
 }

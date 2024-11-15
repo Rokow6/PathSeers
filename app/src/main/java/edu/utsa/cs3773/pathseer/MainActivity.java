@@ -4,16 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
-import edu.utsa.cs3773.pathseer.data.DataTest;
 import edu.utsa.cs3773.pathseer.data.UserDao;
 import edu.utsa.cs3773.pathseer.data.UserData;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button loginButton;
     private Button registerButton;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +40,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.button_sign_in);
         registerButton = findViewById(R.id.button_register);
 
-        // Initialize Database instance for persistent data access
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "pathseers-database")
-                .allowMainThreadQueries() // purely for testing can lead to big slow down with lots of data
-                .fallbackToDestructiveMigration() // will cause all data to be lost on schema change, which is fine since we only have test data
-                .build();
-        DatabaseInitializer.initializeDatabase(db); // initialize empty database tables
-
+        // Initialize Database instance for persistent data access using the singleton
+        db = AppDatabase.getInstance(this);
         userDao = db.userDao();
 
 
@@ -73,41 +71,70 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
             return;
         }
-        //Retrieve user data from the database
-        UserData userData = userDao.getUserDataByUsername(username);
 
-        if (userData == null) {
-            //User not found in the database
-            Toast.makeText(this, "User not found. Please register first.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            //Hash the entered password then add the stored salt
-            String hashedEnteredPass = Encryptor.encryptString(password, userData.salt);
-            //Compare hashed password
-            if (hashedEnteredPass.equals(userData.password)) {
-                Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-
-                saveUserID(username);
-
-                Intent intent = new Intent(MainActivity.this, HomeScreen.class);
-                startActivity(intent);
-                finish();
-            }else {
-                Toast.makeText(this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
+        // Use Executor to handle background operation
+        executorService.execute(() -> {
+            // Retrieve user data from the database
+            UserData userData = userDao.getUserDataByUsername(username);
+            String salt = "";
+            String userDataPassword = "";
+            if (userData != null) {
+                salt = userData.salt;
+                userDataPassword = userData.password;
             }
-        }catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "An error occurred during login.", Toast.LENGTH_SHORT).show();
-        }
+            Log.d("LoginActivity", "Username: " + username);
+            Log.d("LoginActivity", "Stored Salt for Login: " + salt);
+            Log.d("LoginActivity", "Stored Password for Login: " + userDataPassword);
 
+            runOnUiThread(() -> {
+                if (userData != null) {
+                    try {
+                        String hashedEnteredPass = Encryptor.encryptString(password, userData.salt);
+
+                        // Log the entered and stored hash for debugging
+                        Log.d("LoginActivity", "Entered Hash: " + hashedEnteredPass);
+                        Log.d("LoginActivity", "Stored Hash: " + userData.password);
+
+                        if (hashedEnteredPass.equals(userData.password)) {
+                            Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                            saveUserID(username);
+
+                            Intent intent = new Intent(MainActivity.this, HomeScreen.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "An error occurred during login.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "User not found. Please register first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            });
+        });
     }
 
     public void saveUserID(String username) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("user_id", db.userDao().getUserIDFromUsername(username));
-        editor.apply();
+        executorService.execute(() -> {
+            int userId = db.userDao().getUserIDFromUsername(username);
+
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("user_id", userId);
+            editor.apply();
+        });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+    }
+
+
 }

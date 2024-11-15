@@ -18,25 +18,6 @@ public class HomeScreen extends NavigationActivity {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_home_screen, findViewById(R.id.content_frame));
 
-        Button createJobPosting = findViewById(R.id.createJobPosting);
-        Button searchJobListings = findViewById(R.id.searchScreen);
 
-        createJobPosting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, PostJobScreen.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        searchJobListings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, JobSearchScreen.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 }

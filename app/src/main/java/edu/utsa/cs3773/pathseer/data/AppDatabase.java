@@ -34,6 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "pathseers-database")
                     .fallbackToDestructiveMigration() // Clears data on schema changes (for development)
+                    .allowMainThreadQueries() // dunno if this breaks anything
                     .build();
         }
         return instance;

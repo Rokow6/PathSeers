@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Database instance for persistent data access using the singleton
         db = AppDatabase.getInstance(this);
+        DatabaseInitializer.initializeDatabase(db);
         userDao = db.userDao();
 
 

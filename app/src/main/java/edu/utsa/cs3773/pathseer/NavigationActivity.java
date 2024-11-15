@@ -54,7 +54,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
             startActivity(new Intent(this, HomeScreen.class));  //Navigate to HomeScreen
         } else if (menuItem.getItemId() == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsScreen.class));  //Navigate to SettingsScreen
-        } else if (menuItem.getItemId() == R.id.nav_profile) {
+        } else if (menuItem.getItemId() == R.id.nav_post_job) {
+            startActivity(new Intent(this, PostJobScreen.class));  //Navigate to PostJobScreen
+        } else if (menuItem.getItemId() == R.id.nav_search_job) {
+            startActivity(new Intent(this, JobSearchScreen.class));  //Navigate to JobSearchScreen
+        }else if (menuItem.getItemId() == R.id.nav_profile) {
             startActivity(new Intent(this, ProfileScreen.class));  //Navigate to ProfileScreen
         } else if (menuItem.getItemId() == R.id.nav_sign_out) {
             Intent intent = new Intent(this, MainActivity.class);

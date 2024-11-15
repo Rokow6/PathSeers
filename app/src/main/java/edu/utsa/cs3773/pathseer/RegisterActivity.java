@@ -1,5 +1,6 @@
 package edu.utsa.cs3773.pathseer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.concurrent.Executors;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText fullNameInput, emailInput, usernameInput, passwordInput, confirmPasswordInput;
-    private Button registerButton;
+    private Button registerButton, signInButton;
     private AppDatabase db;
     private UserDao userDao;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -43,6 +44,16 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser();
             }
         });
+
+        //Set up sign in button click listener
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initializeViews() {
@@ -52,6 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.input_password);
         confirmPasswordInput = findViewById(R.id.input_confirm_password);
         registerButton = findViewById(R.id.button_sign_up);
+        signInButton = findViewById(R.id.button_sign_in);
+
     }
 
     private void registerUser() {

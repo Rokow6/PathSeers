@@ -35,7 +35,7 @@ public class PostJobScreen extends NavigationActivity {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_post_job_screen, findViewById(R.id.content_frame));
 
-        db = MainActivity.db;
+        db = AppDatabase.getInstance(this);
         sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
 
         initializeViews();

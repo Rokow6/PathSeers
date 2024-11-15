@@ -5,9 +5,7 @@ import java.util.*;
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
 
 public class JobListing {
-    private String title;
-    private String location;
-    private String description;
+    private String title, location, description;
     private double pay;
     private ArrayList<String> benefits;
     private ArrayList<String> requirements;

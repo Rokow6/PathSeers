@@ -21,14 +21,14 @@ public class JobListingData {
     int fk_employerID;
 
     @ColumnInfo(name = "title")
-    String title;
+    public String title;
 
     @ColumnInfo(name = "location")
-    String location;
+    public String location;
 
     @ColumnInfo(name = "description")
-    String description;
+    public String description;
 
     @ColumnInfo(name = "pay")
-    double pay;
+    public String pay;
 }

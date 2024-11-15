@@ -145,6 +145,7 @@ public class PostJobScreen extends NavigationActivity {
         });
     }
 
+    // Initializes the View objects in the screen
     private void initializeViews() {
         postJobListingLayout = findViewById(R.id.postJobLisingLayout);
         titleInput = findViewById(R.id.titleInput);

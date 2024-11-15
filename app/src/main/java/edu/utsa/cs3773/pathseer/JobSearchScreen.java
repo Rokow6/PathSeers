@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,15 +25,16 @@ public class JobSearchScreen extends NavigationActivity {
 
         db = MainActivity.db;
         sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-        jobListingData = db.jobListingDao().getAll();
+        jobListingData = db.jobListingDao().getAll(); // Pulls all the JobListingData
 
         initializeViews();
 
-        recyclerViewJobs.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData));
     }
 
+    // Initializes the View objects on the screen
     private void initializeViews() {
         recyclerViewJobs = findViewById(R.id.recyclerViewJobs);
+        recyclerViewJobs.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData));
     }
 }

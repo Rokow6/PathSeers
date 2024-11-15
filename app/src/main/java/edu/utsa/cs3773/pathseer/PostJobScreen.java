@@ -15,7 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
-import edu.utsa.cs3773.pathseer.objectClasses.Employer;
 import edu.utsa.cs3773.pathseer.objectClasses.JobListing;
 
 public class PostJobScreen extends NavigationActivity {
@@ -187,13 +186,13 @@ public class PostJobScreen extends NavigationActivity {
                 // it means it is double
             } catch (Exception e1) {
                 // this means it is not double
-                Toast.makeText(this, "Pay entered is not valid (enter a number)", Toast.LENGTH_SHORT).show();
+                showToast("Pay entered is not valid (enter a number)");
                 e1.printStackTrace();
                 return;
             }
 
         if (title.isEmpty() || location.isEmpty() || description.isEmpty()) {
-            Toast.makeText(this, "Please fill out title, location, and description", Toast.LENGTH_SHORT).show();
+            showToast("Please fill out title, location, and description");
             return;
         }
 
@@ -202,7 +201,7 @@ public class PostJobScreen extends NavigationActivity {
         addArrayLists(jobListing);
 
         // Successful creation of JobListing; sends back to home screen
-        Toast.makeText(this, "Created Job Listing", Toast.LENGTH_SHORT).show();
+        showToast("Created Job Listing");
         Intent intent = new Intent(PostJobScreen.this, HomeScreen.class);
         startActivity(intent);
         finish();
@@ -224,6 +223,7 @@ public class PostJobScreen extends NavigationActivity {
         }
     }
 
+    // Creates Toast with input String
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

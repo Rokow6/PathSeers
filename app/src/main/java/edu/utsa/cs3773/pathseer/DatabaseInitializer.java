@@ -11,7 +11,7 @@ public class DatabaseInitializer {
     // NOTE: if you want to reset the database so this script runs again then:
     //      you can hold click the app in the emulator -> app info -> storage & cache -> clear storage
     public static void initializeDatabase(AppDatabase db) {
-        if (db.userDao().getAll().isEmpty()) { // user data
+        if (db.userDao().getAllSecure().isEmpty()) { // user data
             try {
                 initializeUserData(db);
             } catch (NoSuchAlgorithmException e) {

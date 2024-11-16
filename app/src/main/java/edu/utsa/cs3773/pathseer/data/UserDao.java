@@ -14,6 +14,10 @@ public interface UserDao {
     @Query("SELECT * FROM UserData")
     List<UserData> getAll();
 
+    // Returns a list of all user data except password and salt
+    @Query("SELECT userID, age, name, bio, email, username FROM UserData")
+    List<UserData> getAllSecure();
+
     // Returns the user data of the specified user
     @Query("SELECT * FROM UserData WHERE userID = (:userID)")
     UserData getUserDataByID(int userID);

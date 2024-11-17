@@ -68,6 +68,5 @@ public class JobSearchScreen extends NavigationActivity {
     // Updates the recycler view to reflect current search results
     private void updateViews() {
         recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData));
-        // searchView.setQuery(query, false);
     }
 }

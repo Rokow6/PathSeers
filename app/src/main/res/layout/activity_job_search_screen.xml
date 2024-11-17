@@ -10,18 +10,14 @@
     tools:context=".JobSearchScreen">
 
     <!-- Search Bar -->
-    <EditText
-        android:id="@+id/et_search_job"
+    <SearchView
+        android:id="@+id/sv_search_job"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="16dp"
-        android:hint="Job title, company, or industry"
         android:background="@drawable/search_edit_text_background"
         android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="16sp"
-        android:textColor="#00796B"
-        android:textColorHint="#808080" />
+        android:paddingEnd="12dp" />
 
     <!-- Filter Options -->
     <LinearLayout

@@ -20,6 +20,35 @@ public interface JobListingDao {
     @Query("SELECT * FROM JobListingData WHERE fk_employerID = (:employerID)")
     List<JobListingData> getJobListingsByEmployerID(int employerID);
 
+    // Returns a list of job listing data containing the search string in the title or description
+    @Query("SELECT JobListingData.* FROM JobListingData " +
+            "JOIN EmployerData ON JobListingData.fk_employerID = EmployerData.employerID " +
+            "JOIN UserData ON EmployerData.fk_userID = UserData.userID " +
+            "WHERE UPPER(title) LIKE UPPER('%' || :search || '%') " +
+            "OR UPPER(description) LIKE UPPER('%' || :search || '%') OR UPPER(name) LIKE UPPER('%' || :search || '%')")
+    List<JobListingData> getJobListingsBySearchText(String search);
+
+    // Returns a list of job listing data matching the specified pay range inclusively
+    @Query("SELECT * FROM JobListingData WHERE pay >= :lowerBound AND pay <= :upperBound")
+    List<JobListingData> getJobListingsByPayRange(int lowerBound, int upperBound);
+
+    // Returns a list of job listing data at the given location
+    @Query("SELECT * FROM JobListingData WHERE UPPER(location) LIKE UPPER('%' || :location || '%')")
+    List<JobListingData> getJobListingsByLocation(String location);
+
+    // Returns a list of job listing data associated with a requirement
+    @Query("SELECT JobListingData.*" +
+            " FROM JobListingData JOIN RequirementData ON RequirementData.fk_jobListingID = JobListingData.jobListingID" +
+            " WHERE UPPER(RequirementData.text) LIKE UPPER('%' || :requirementText || '%')")
+    List<JobListingData> getJobListingsByRequirement(String requirementText);
+
+    // Returns a list of job listing data associated with a tag
+    @Query("SELECT JobListingData.*" +
+            " FROM JobListingData JOIN JobHasTagData ON JobListingData.jobListingID = JobHasTagData.fk_jobListingID" +
+            " JOIN TagData ON JobHasTagData.fk_tagID = TagData.tagID" +
+            " WHERE UPPER(TagData.text) LIKE UPPER('%' || :tagText || '%')")
+    List<JobListingData> getJobListingsByTag(String tagText);
+
     // Returns the id of a job listing based on its employer ID and title; returns 0 if job listing does not exist
     @Query("SELECT jobListingID FROM JobListingData WHERE fk_employerID = (:employerID) AND title = (:title)")
     int getJobListingIDFromData(int employerID, String title);

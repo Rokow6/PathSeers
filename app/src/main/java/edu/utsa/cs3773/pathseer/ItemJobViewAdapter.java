@@ -32,7 +32,7 @@ public class ItemJobViewAdapter extends RecyclerView.Adapter<ItemJobViewHolder> 
         JobListingData job = jobListingData.get(position);
         holder.tv_job_title.setText(job.title);
         holder.tv_company_location.setText(job.location);
-        holder.tv_salary.setText(job.pay);
+        holder.tv_salary.setText(String.valueOf(job.pay));
     }
 
     @Override

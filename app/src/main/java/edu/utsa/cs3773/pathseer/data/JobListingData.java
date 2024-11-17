@@ -30,5 +30,20 @@ public class JobListingData {
     public String description;
 
     @ColumnInfo(name = "pay")
-    public String pay;
+    public double pay;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+
+        JobListingData jldObj = (JobListingData) obj;
+        return (jldObj.jobListingID == this.jobListingID);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.jobListingID;
+    }
 }

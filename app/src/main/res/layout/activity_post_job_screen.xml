@@ -52,7 +52,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
                 android:hint="Enter the pay for the job"
-                android:inputType="number" />
+                android:inputType="numberDecimal" />
 
             <LinearLayout
                 android:id="@+id/benefitLayout"

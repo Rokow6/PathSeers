@@ -12,7 +12,7 @@ public class JobListingSearcher {
     // Searches job listings using a search string; looks through title and description for occurrence of search
     // Leave inputs as null or -1 if they are not used
     // Very simple search, only uses a single string and does not take keywords into account
-    public static List<JobListingData> SearchJobListings(AppDatabase db, String search, int payLowerBound, int payUpperBound,
+    public static List<JobListingData> SearchJobListings(AppDatabase db, String search, double payLowerBound, double payUpperBound,
                                                           ArrayList<String> requirements, ArrayList<String> tags) {
         List<JobListingData> searchList = db.jobListingDao().getAll(); // get the jobs listings so we can narrow them down
 

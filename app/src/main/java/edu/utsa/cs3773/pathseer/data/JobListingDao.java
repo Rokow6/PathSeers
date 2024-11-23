@@ -30,7 +30,7 @@ public interface JobListingDao {
 
     // Returns a list of job listing data matching the specified pay range inclusively
     @Query("SELECT * FROM JobListingData WHERE pay >= :lowerBound AND pay <= :upperBound")
-    List<JobListingData> getJobListingsByPayRange(int lowerBound, int upperBound);
+    List<JobListingData> getJobListingsByPayRange(double lowerBound, double upperBound);
 
     // Returns a list of job listing data at the given location
     @Query("SELECT * FROM JobListingData WHERE UPPER(location) LIKE UPPER('%' || :location || '%')")

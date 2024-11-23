@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_pay_filter_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Pay Bounds"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/input_upper_bound"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="Enter upper bound"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/input_lower_bound"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="Enter lower bound"
+        android:inputType="numberDecimal" />
+</LinearLayout>

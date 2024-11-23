@@ -63,13 +63,14 @@
             android:id="@+id/btn_filter"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@color/black"
-            android:contentDescription="Filter"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/ic_search"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="Filter"
             android:padding="12dp"
-            android:layout_gravity="center_vertical" />
+            android:src="@android:drawable/ic_menu_search" />
     </LinearLayout>
 
     <!-- Job List (RecyclerView to display multiple jobs) -->

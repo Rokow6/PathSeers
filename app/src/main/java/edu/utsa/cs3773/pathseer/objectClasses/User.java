@@ -13,6 +13,7 @@ public class User {
     private String email;
     private String username;
     private String password;
+    private UploadedFile resume;
     private ArrayList<Notification> notifications;
     private AppDatabase db;
 
@@ -116,6 +117,16 @@ public class User {
         String hashedPass = Encryptor.encryptString(password, getID(), db.userDao()); //need to store hash in the database
         this.password = hashedPass; // prolly don't need this idk
         db.userDao().updateUserData(getID(), this.age, this.name, this.bio, this.email, this.username, this.password, db.userDao().getUserDataByID(getID()).salt);
+    }
+
+    // Returns the Resume of the User
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+    // Sets the Resume of the User
+    public void setResume(UploadedFile resume) {
+        this.resume = resume;
     }
 
     // Returns the ArrayList of Notifications of the User

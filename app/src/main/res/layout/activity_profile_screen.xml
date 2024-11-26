@@ -173,6 +173,14 @@
                     android:text="Add Resume"
                     android:textColor="@color/colorPrimary" />
 
+                <ImageView
+                    android:id="@+id/resumeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter" />
+
                 <!-- Skills Section -->
                 <TextView
                     android:id="@+id/ResumeHeader"

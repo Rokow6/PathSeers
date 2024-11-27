@@ -31,9 +31,18 @@ public interface JobSeekerDao {
     @Query("SELECT jobSeekerID FROM JobSeekerData WHERE fk_userID = (:userID)")
     int getJobSeekerIDFromUserID(int userID);
 
+    // Returns the resume uri string based on the job seeker id
+    // The resume uri string can be converted back into a uri with Uri.parse(string)
+    @Query("SELECT resumeUriString FROM JobSeekerData WHERE jobSeekerID = (:jobSeekerID)")
+    String getResumeUriStringFromJobSeekerID(int jobSeekerID);
+
+    // Returns the resume's file name based on the job seeker id
+    @Query("SELECT resumeFileName FROM JobSeekerData WHERE jobSeekerID = (:jobSeekerID)")
+    String getResumeFileNameFromJobSeekerID(int jobSeekerID);
+
     // Adds a user as a job seeker using their user ID and resume path
-    @Query("INSERT INTO JobSeekerData (fk_userID,resumePath) VALUES (:userID,:resumePath)")
-    void addJobSeekerData(int userID, String resumePath);
+    @Query("INSERT INTO JobSeekerData (fk_userID,resumeUriString) VALUES (:userID,:resumeUriString)")
+    void addJobSeekerData(int userID, String resumeUriString);
 
     // Removes a job seeker by job seeker ID (NOTE: this does not delete user data, just the job seeker status and resume path of a user)
     @Query("DELETE FROM JobSeekerData WHERE jobSeekerID = (:jobSeekerID)")
@@ -44,7 +53,8 @@ public interface JobSeekerDao {
     void deleteJobSeekerByUserID(int jobSeekerID);
 
     // Updates the resume path of the job seeker given by jobSeekerID
-    @Query("UPDATE JobSeekerData SET resumePath = :resumePath WHERE jobSeekerID = (:jobSeekerID)")
-    void updateJobSeekerByID(int jobSeekerID, String resumePath);
+    // the resume's uri string is simply the uri.toString() value
+    @Query("UPDATE JobSeekerData SET resumeUriString = :resumeUriString, resumeFileName = :resumeFileName WHERE jobSeekerID = (:jobSeekerID)")
+    void updateJobSeekerByID(int jobSeekerID, String resumeUriString, String resumeFileName);
 
 }

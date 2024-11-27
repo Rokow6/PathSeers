@@ -19,7 +19,10 @@ public class JobSeekerData {
     @ColumnInfo(name = "fk_userID")
     public int fk_userID;
 
-    @ColumnInfo(name = "resumePath")
-    public String resumePath;
+    @ColumnInfo(name = "resumeUriString")
+    public String resumeUriString;
+
+    @ColumnInfo(name = "resumeFileName")
+    public String resumeFileName;
 
 }

@@ -25,6 +25,7 @@ public class ProfileScreen extends NavigationActivity {
     private Button addResumeButton;
     private SharedPreferences sharedPref;
     private AppDatabase db;
+    int jobSeekerID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,22 @@ public class ProfileScreen extends NavigationActivity {
 
         db = AppDatabase.getInstance(this);
         sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        jobSeekerID = db.jobSeekerDao().getJobSeekerIDFromUserID(sharedPref.getInt("user_id", -1));
 
         initializeViews();
+
+        // check if user is a job seeker and if they are then check if they have a resume saved and display it
+        // this first check is only necessary atm to stop a crash if someone who isn't a job seeker accesses the profile screen
+        if (jobSeekerID != 0 && !db.jobSeekerDao().getResumeUriStringFromJobSeekerID(jobSeekerID).isEmpty()) {
+            displayImage(Uri.parse(db.jobSeekerDao().getResumeUriStringFromJobSeekerID(jobSeekerID)));
+        }
 
         // v -> openFilePicker()
         addResumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFilePicker();
-                // Logic here later for adding UploadedFile data to database
+                // moved the database logic down to onActivityResult as code here would run before the image is selected
             }
         });
     }
@@ -69,6 +77,17 @@ public class ProfileScreen extends NavigationActivity {
                 uploadedFile = new UploadedFile(fileUri, fileName); // Store in class attribute
                 Toast.makeText(this, "File Uploaded: " + fileName, Toast.LENGTH_SHORT).show();
                 displayImage(fileUri); // Display the selected image
+
+                // again, this check is only necessary to stop a crash caused by a non-job seeker users attempting to upload a file
+                if (jobSeekerID != 0) {
+                    // add uri to database
+                    db.jobSeekerDao().updateJobSeekerByID(jobSeekerID, fileUri.toString(), fileName);
+                    getContentResolver().takePersistableUriPermission(fileUri,
+                            (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION)); // this stops a crash after reopening the app since permission is needed to access the file
+                }
+                else {
+                    Toast.makeText(this, "WARN: Resume will only be saved for job seeker users", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

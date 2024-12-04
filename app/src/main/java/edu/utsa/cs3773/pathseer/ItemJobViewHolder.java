@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemJobViewHolder extends RecyclerView.ViewHolder {
+    public View btn_apply;
     private ImageView jobIcon;
     TextView tv_job_title, tv_company_location, tv_salary;
 
@@ -21,5 +22,6 @@ public class ItemJobViewHolder extends RecyclerView.ViewHolder {
         tv_job_title = itemView.findViewById(R.id.tv_job_title);
         tv_company_location = itemView.findViewById(R.id.tv_company_location);
         tv_salary = itemView.findViewById(R.id.tv_salary);
+        btn_apply = itemView.findViewById(R.id.btn_apply);
     }
 }

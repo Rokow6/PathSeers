@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.pathseer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -30,9 +31,19 @@ public class ItemJobViewAdapter extends RecyclerView.Adapter<ItemJobViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ItemJobViewHolder holder, int position) {
         JobListingData job = jobListingData.get(position);
+
+        // Set job data in the UI
         holder.tv_job_title.setText(job.title);
         holder.tv_company_location.setText(job.location);
         holder.tv_salary.setText(String.format("$%,.2f", job.pay));
+
+        // Set click listener for the "Apply" button
+        holder.btn_apply.setOnClickListener(v -> {
+            Intent intent = new Intent(context, JobDetailsScreen.class);
+            intent.putExtra("jobListingID", job.jobListingID);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        });
     }
 
     @Override

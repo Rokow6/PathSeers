@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey;
 )
 public class JobListingData {
     @PrimaryKey(autoGenerate = true)
-    int jobListingID;
+    public int jobListingID;
 
     @ColumnInfo(name = "fk_employerID")
     int fk_employerID;

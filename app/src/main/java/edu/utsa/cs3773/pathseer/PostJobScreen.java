@@ -39,7 +39,37 @@ public class PostJobScreen extends NavigationActivity {
         sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
 
         initializeViews();
+        initializeButtonListeners();
+    }
 
+    // Initializes the View objects in the screen
+    private void initializeViews() {
+        postJobListingLayout = findViewById(R.id.postJobLisingLayout);
+        titleInput = findViewById(R.id.titleInput);
+        locationInput = findViewById(R.id.locationInput);
+        descriptionInput = findViewById(R.id.descriptionInput);
+        payInput = findViewById(R.id.payInput);
+        benefitInput = (EditText)findViewById(R.id.benefitInput);
+        addBenefit = (Button)findViewById(R.id.addBenefit);
+        benefitLayout = (LinearLayout)findViewById(R.id.benefitLayout);
+        removeBenefitLayout = (LinearLayout)findViewById(R.id.removeBenefitLayout);
+        requirementInput = (EditText)findViewById(R.id.requirementInput);
+        addRequirement = (Button)findViewById(R.id.addRequirement);
+        requirementLayout = (LinearLayout)findViewById(R.id.requirementLayout);
+        removeRequirementLayout = (LinearLayout)findViewById(R.id.removeRequirementLayout);
+        responsibilityInput = (EditText)findViewById(R.id.responsibilityInput);
+        addResponsibility = (Button)findViewById(R.id.addResponsibility);
+        responsibilityLayout = (LinearLayout)findViewById(R.id.responsibilityLayout);
+        removeResponsibilityLayout = (LinearLayout)findViewById(R.id.removeResponsibilityLayout);
+        tagInput = (EditText)findViewById(R.id.tagInput);
+        addTag = (Button)findViewById(R.id.addTag);
+        tagLayout = (LinearLayout)findViewById(R.id.tagLayout);
+        removeTagLayout = (LinearLayout)findViewById(R.id.removeTagLayout);
+        publishJobListing = findViewById(R.id.addJobListing);
+    }
+
+    // Initializes Button OnClickListeners
+    private void initializeButtonListeners() {
         addBenefit.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -142,32 +172,6 @@ public class PostJobScreen extends NavigationActivity {
                 publishJobListing();
             }
         });
-    }
-
-    // Initializes the View objects in the screen
-    private void initializeViews() {
-        postJobListingLayout = findViewById(R.id.postJobLisingLayout);
-        titleInput = findViewById(R.id.titleInput);
-        locationInput = findViewById(R.id.locationInput);
-        descriptionInput = findViewById(R.id.descriptionInput);
-        payInput = findViewById(R.id.payInput);
-        benefitInput = (EditText)findViewById(R.id.benefitInput);
-        addBenefit = (Button)findViewById(R.id.addBenefit);
-        benefitLayout = (LinearLayout)findViewById(R.id.benefitLayout);
-        removeBenefitLayout = (LinearLayout)findViewById(R.id.removeBenefitLayout);
-        requirementInput = (EditText)findViewById(R.id.requirementInput);
-        addRequirement = (Button)findViewById(R.id.addRequirement);
-        requirementLayout = (LinearLayout)findViewById(R.id.requirementLayout);
-        removeRequirementLayout = (LinearLayout)findViewById(R.id.removeRequirementLayout);
-        responsibilityInput = (EditText)findViewById(R.id.responsibilityInput);
-        addResponsibility = (Button)findViewById(R.id.addResponsibility);
-        responsibilityLayout = (LinearLayout)findViewById(R.id.responsibilityLayout);
-        removeResponsibilityLayout = (LinearLayout)findViewById(R.id.removeResponsibilityLayout);
-        tagInput = (EditText)findViewById(R.id.tagInput);
-        addTag = (Button)findViewById(R.id.addTag);
-        tagLayout = (LinearLayout)findViewById(R.id.tagLayout);
-        removeTagLayout = (LinearLayout)findViewById(R.id.removeTagLayout);
-        publishJobListing = findViewById(R.id.addJobListing);
     }
 
     // Creates a JobListing with input from screen

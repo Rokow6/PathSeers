@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import android.util.Patterns;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.SharedPreferences;
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
 import edu.utsa.cs3773.pathseer.data.UserDao;
 import edu.utsa.cs3773.pathseer.data.UserData;
@@ -56,6 +56,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isValidEmail(String email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
     private void initializeViews() {
         fullNameInput = findViewById(R.id.input_full_name);
         emailInput = findViewById(R.id.input_email);
@@ -79,12 +83,18 @@ public class RegisterActivity extends AppCompatActivity {
             showToast("Please fill out all fields");
             return;
         }
+        // Check if email is valid
+        if (!isValidEmail(email)) {
+            showToast("Invalid email format");
+            return;
+        }
 
         // Check if passwords match
         if (!password.equals(confirmPassword)) {
             showToast("Passwords do not match");
             return;
         }
+        registerButton.setEnabled(false);
 
         executorService.execute(() -> {
             // Check if username or email already exists
@@ -116,7 +126,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Update the hashed password in the database
                 userDao.updatePassword(userId, hashedPassword);
-
+                // Save full name to SharedPreferences
+                SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("fullName", fullName); // Save the full name
+                editor.apply(); // Apply changes
 
                 runOnUiThread(() -> {
                     Log.d("RegisterActivity", "User created successfully.");
@@ -128,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Log.e("RegisterActivity", "User could not be created.");
                     showToast("Error occurred while creating account.");
+                    registerButton.setEnabled(true); // Re-enable button
                 });
             }
         });

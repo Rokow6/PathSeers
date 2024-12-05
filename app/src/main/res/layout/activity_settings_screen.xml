@@ -27,7 +27,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:divider="?android:attr/listDivider"
-        android:showDividers="middle">
+        android:showDividers="middle"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/account_option"
@@ -38,8 +39,8 @@
             android:gravity="center_vertical"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
             android:textColor="@color/black" />
 
         <TextView
@@ -51,8 +52,8 @@
             android:gravity="center_vertical"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
             android:textColor="@color/black" />
 
         <TextView
@@ -64,8 +65,8 @@
             android:gravity="center_vertical"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
             android:textColor="@color/black" />
 
         <TextView
@@ -77,8 +78,8 @@
             android:gravity="center_vertical"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
             android:textColor="@color/black" />
     </LinearLayout>
 

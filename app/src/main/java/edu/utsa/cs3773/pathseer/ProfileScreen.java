@@ -10,6 +10,7 @@ import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,12 +21,14 @@ import edu.utsa.cs3773.pathseer.objectClasses.UploadedFile;
 public class ProfileScreen extends NavigationActivity {
 
     private static final int PICK_FILE_REQUEST = 1;
-    private UploadedFile uploadedFile; // Attribute to store the uploaded file
-    private ImageView resumeView; // To display uploaded image
+    private UploadedFile uploadedFile;
+    private ImageView resumeView;
     private Button addResumeButton;
     private SharedPreferences sharedPref;
     private AppDatabase db;
     int jobSeekerID;
+    private TextView profilePictureText;
+    private TextView emailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +41,29 @@ public class ProfileScreen extends NavigationActivity {
 
         initializeViews();
 
-        // check if user is a job seeker and if they are then check if they have a resume saved and display it
-        // this first check is only necessary atm to stop a crash if someone who isn't a job seeker accesses the profile screen
-        if (jobSeekerID != 0 && !db.jobSeekerDao().getResumeUriStringFromJobSeekerID(jobSeekerID).isEmpty()) {
+        // Check if the user is a job seeker and if they have a resume saved
+        if (jobSeekerID > 0 && !db.jobSeekerDao().getResumeUriStringFromJobSeekerID(jobSeekerID).isEmpty()) {
             displayImage(Uri.parse(db.jobSeekerDao().getResumeUriStringFromJobSeekerID(jobSeekerID)));
         }
 
-        // v -> openFilePicker()
+        // Fetch user info from the database
+        String fullName = db.jobSeekerDao().getFullNameFromJobSeekerID(jobSeekerID);
+        String email = db.jobSeekerDao().getEmailFromJobSeekerID(jobSeekerID);
+
+        if (fullName != null) {
+            String initials = getInitials(fullName);
+            profilePictureText.setText(initials); // Display initials
+        }
+
+        if (email != null) {
+            emailTextView.setText(email); // Display email
+        }
+
+        // Open file picker on button click
         addResumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFilePicker();
-                // moved the database logic down to onActivityResult as code here would run before the image is selected
             }
         });
     }
@@ -57,6 +71,21 @@ public class ProfileScreen extends NavigationActivity {
     private void initializeViews() {
         addResumeButton = findViewById(R.id.addResumeButton);
         resumeView = findViewById(R.id.resumeView);
+        profilePictureText = findViewById(R.id.profilePicture);
+        emailTextView = findViewById(R.id.email);
+    }
+
+    private String getInitials(String fullName) {
+        String[] nameParts = fullName.split(" ");
+        StringBuilder initials = new StringBuilder();
+
+        for (String part : nameParts) {
+            if (!part.isEmpty()) {
+                initials.append(part.charAt(0)); // Add the first letter of each name part
+            }
+        }
+
+        return initials.toString().toUpperCase(); // Return initials in uppercase
     }
 
     private void openFilePicker() {
@@ -78,14 +107,12 @@ public class ProfileScreen extends NavigationActivity {
                 Toast.makeText(this, "File Uploaded: " + fileName, Toast.LENGTH_SHORT).show();
                 displayImage(fileUri); // Display the selected image
 
-                // again, this check is only necessary to stop a crash caused by a non-job seeker users attempting to upload a file
-                if (jobSeekerID != 0) {
-                    // add uri to database
+                if (jobSeekerID > 0) {
+                    // Add URI to the database for job seekers
                     db.jobSeekerDao().updateJobSeekerByID(jobSeekerID, fileUri.toString(), fileName);
                     getContentResolver().takePersistableUriPermission(fileUri,
-                            (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION)); // this stops a crash after reopening the app since permission is needed to access the file
-                }
-                else {
+                            (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION)); // Permission handling
+                } else {
                     Toast.makeText(this, "WARN: Resume will only be saved for job seeker users", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -97,16 +124,20 @@ public class ProfileScreen extends NavigationActivity {
         if (uri.getScheme().equals("content")) {
             try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
-                    fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)); // idk what this is about but the code works maybe so ¯\_('_')_/¯
+                    int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (columnIndex != -1) {
+                        fileName = cursor.getString(columnIndex); // Fetching the file name
+                    }
                 }
             }
         }
         return fileName != null ? fileName : uri.getLastPathSegment();
     }
 
+
     private void displayImage(Uri fileUri) {
         if (resumeView != null) {
-            resumeView.setImageURI(fileUri);
+            resumeView.setImageURI(fileUri); // Displaying the uploaded image
         }
     }
 }

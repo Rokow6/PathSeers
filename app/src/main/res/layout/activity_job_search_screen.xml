@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,7 @@
     tools:context=".JobSearchScreen">
 
     <!-- Search Bar -->
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_search_job"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -66,11 +67,12 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_search"
-            android:backgroundTint="@color/colorPrimary"
             android:contentDescription="Filter"
-            android:padding="12dp"
-            android:src="@android:drawable/ic_menu_search" />
+            android:padding="0dp"
+            android:src="@drawable/filter"
+            app:tint="@null"
+            android:scaleType="fitCenter" />
+
     </LinearLayout>
 
     <!-- Job List (RecyclerView to display multiple jobs) -->

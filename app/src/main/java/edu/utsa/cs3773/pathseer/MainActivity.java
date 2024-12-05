@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Initialize views
+        // Initialize views
         usernameInput = findViewById(R.id.input_username);
         passwordInput = findViewById(R.id.input_password);
         loginButton = findViewById(R.id.button_sign_in);
@@ -42,31 +42,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Database instance for persistent data access using the singleton
         db = AppDatabase.getInstance(this);
-        DatabaseInitializer.initializeDatabase(db);
+        executorService.execute(() -> DatabaseInitializer.initializeDatabase(db));
         userDao = db.userDao();
 
+        // Set up login button click listener
+        loginButton.setOnClickListener(view -> handleLogin());
 
-        //Set up login button click listener
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleLogin();
-            }
-        });
-
-        //Set up register button click listener
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        // Set up register button click listener
+        registerButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 
     private void handleLogin() {
-        String username = usernameInput.getText().toString();
-        String password = passwordInput.getText().toString();
+        final String username = usernameInput.getText().toString().trim();
+        final String password = passwordInput.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
@@ -77,55 +68,47 @@ public class MainActivity extends AppCompatActivity {
         executorService.execute(() -> {
             // Retrieve user data from the database
             UserData userData = userDao.getUserDataByUsername(username);
-            String salt = "";
-            String userDataPassword = "";
-            if (userData != null) {
-                salt = userData.salt;
-                userDataPassword = userData.password;
+            if (userData == null) {
+                runOnUiThread(() -> Toast.makeText(this, "User not found. Please register first.", Toast.LENGTH_SHORT).show());
+                return;
             }
-            Log.d("LoginActivity", "Username: " + username);
-            Log.d("LoginActivity", "Stored Salt for Login: " + salt);
-            Log.d("LoginActivity", "Stored Password for Login: " + userDataPassword);
+
+            final String salt = userData.salt != null ? userData.salt : "";
+            final String storedPassword = userData.password != null ? userData.password : "";
 
             runOnUiThread(() -> {
-                if (userData != null) {
-                    try {
-                        String hashedEnteredPass = Encryptor.encryptString(password, userData.salt);
+                try {
+                    String hashedEnteredPass = Encryptor.encryptString(password, salt);
 
-                        // Log the entered and stored hash for debugging
-                        Log.d("LoginActivity", "Entered Hash: " + hashedEnteredPass);
-                        Log.d("LoginActivity", "Stored Hash: " + userData.password);
+                    // Check if entered password matches stored password
+                    if (hashedEnteredPass.equals(storedPassword)) {
+                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
-                        if (hashedEnteredPass.equals(userData.password)) {
-                            Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                            saveUserID(username);
+                        // Save user details (user ID and full name)
+                        saveUserDetails(username);
 
-                            Intent intent = new Intent(MainActivity.this, HomeScreen.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(this, "An error occurred during login.", Toast.LENGTH_SHORT).show();
+                        // Proceed to HomeScreen activity
+                        Intent intent = new Intent(MainActivity.this, HomeScreen.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(this, "User not found. Please register first.", Toast.LENGTH_SHORT).show();
-                    return;
+                } catch (Exception e) {
+                    Log.e("MainActivity", "Error hashing password: ", e);
+                    Toast.makeText(this, "An error occurred during login.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
     }
 
-    public void saveUserID(String username) {
+    public void saveUserDetails(String username) {
         executorService.execute(() -> {
-            int userId = db.userDao().getUserIDFromUsername(username);
-
-            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("user_id", userId);
-            editor.apply();
+            UserData userData = userDao.getUserDataByUsername(username);
+            if (userData != null) {
+                // Save the full name along with the user ID
+                PreferenceUtils.saveUserSession(MainActivity.this, userData.userID, userData.fullName);
+            }
         });
     }
 
@@ -135,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
         if (db != null && db.isOpen()) {
             db.close();
         }
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdown();
+        }
     }
-
-
 }

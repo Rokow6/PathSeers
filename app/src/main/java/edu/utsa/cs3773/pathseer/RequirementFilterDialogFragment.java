@@ -5,22 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class RequirementFilterDialogFragment extends DialogFragment {
-    LayoutInflater layoutInflater;
-    View view;
     Bundle args;
-    EditText upperEditText;
-    EditText lowerEditText;
     String[] items;
     ArrayList<String> selectedItems;
     boolean[] checkedItems;

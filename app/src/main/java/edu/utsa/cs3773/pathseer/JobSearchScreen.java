@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
 import edu.utsa.cs3773.pathseer.data.JobListingData;

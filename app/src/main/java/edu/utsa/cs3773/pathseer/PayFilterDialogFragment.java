@@ -61,8 +61,7 @@ public class PayFilterDialogFragment extends DialogFragment {
                         // set args to new values to pass back into the search screen
                         args.clear();
                         // check if there was any numbers entered, and if either field is left blank, simply returns as both being blank
-                        // TODO: figure out why this empty/null check doesn't work when only one edit text is left blank like this should work I think??
-                        if (upperEditText.getText().toString().isEmpty() || lowerEditText.toString().isEmpty()) {
+                        if (upperEditText.getText().toString().isEmpty() || lowerEditText.getText().toString().isEmpty()) {
                             args.putDouble("upper", -1);
                             args.putDouble("lower", -1);
                         }

@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             UserData userData = userDao.getUserDataByUsername(username);
             if (userData != null) {
                 // Save the full name along with the user ID
-                PreferenceUtils.saveUserSession(MainActivity.this, userData.userID, userData.fullName);
+                PreferenceUtils.saveUserSession(MainActivity.this, userData.userID, userData.name);
             }
         });
     }

@@ -40,6 +40,16 @@ public interface JobSeekerDao {
     @Query("SELECT resumeFileName FROM JobSeekerData WHERE jobSeekerID = (:jobSeekerID)")
     String getResumeFileNameFromJobSeekerID(int jobSeekerID);
 
+    // Returns name of user based on job seeker ID
+    @Query("SELECT UserData.name" +
+            " FROM UserData JOIN JobSeekerData ON JobSeekerData.fk_userID = UserData.userID WHERE JobSeekerData.jobSeekerID = (:jobSeekerID)")
+    String getFullNameFromJobSeekerID(int jobSeekerID);
+
+    // Returns name of user based on job seeker ID
+    @Query("SELECT UserData.email" +
+            " FROM UserData JOIN JobSeekerData ON JobSeekerData.fk_userID = UserData.userID WHERE JobSeekerData.jobSeekerID = (:jobSeekerID)")
+    String getEmailFromJobSeekerID(int jobSeekerID);
+
     // Adds a user as a job seeker using their user ID and resume path
     @Query("INSERT INTO JobSeekerData (fk_userID,resumeUriString) VALUES (:userID,:resumeUriString)")
     void addJobSeekerData(int userID, String resumeUriString);

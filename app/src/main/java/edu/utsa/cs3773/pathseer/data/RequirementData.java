@@ -15,11 +15,11 @@ import androidx.room.PrimaryKey;
 )
 public class RequirementData {
     @PrimaryKey(autoGenerate = true)
-    int requirementID;
+    public int requirementID;
 
     @ColumnInfo(name = "fk_jobListingID")
-    int fk_jobListingID;
+    public int fk_jobListingID;
 
     @ColumnInfo(name = "text")
-    String text;
+    public String text;
 }

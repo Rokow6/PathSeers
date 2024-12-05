@@ -24,37 +24,37 @@
         android:id="@+id/filter_options_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:layout_marginBottom="16dp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_pay"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="48dp"
+            android:layout_weight="1"
             android:background="@drawable/search_edit_text_background"
             android:text="Pay"
             android:textColor="#00796B"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/btn_hours"
+            android:id="@+id/btn_requirements"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="48dp"
+            android:layout_weight="1"
             android:background="@drawable/search_edit_text_background"
-            android:text="Hours"
+            android:text="Requirements"
             android:textColor="#00796B"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <Button
-            android:id="@+id/btn_experience"
+            android:id="@+id/btn_tags"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="48dp"
+            android:layout_weight="1"
             android:background="@drawable/search_edit_text_background"
-            android:text="Experience"
+            android:text="Tags"
             android:textColor="#00796B"
             android:textSize="14sp" />
 

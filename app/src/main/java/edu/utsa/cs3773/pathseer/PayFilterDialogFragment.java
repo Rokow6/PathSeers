@@ -60,15 +60,25 @@ public class PayFilterDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // set args to new values to pass back into the search screen
                         args.clear();
-                        args.putDouble("upper", Double.parseDouble(upperEditText.getText().toString()));
-                        args.putDouble("lower", Double.parseDouble(lowerEditText.getText().toString()));
+                        // check if there was any numbers entered, and if either field is left blank, simply returns as both being blank
+                        // TODO: figure out why this empty/null check doesn't work when only one edit text is left blank like this should work I think??
+                        if (upperEditText.getText().toString().isEmpty() || lowerEditText.toString().isEmpty()) {
+                            args.putDouble("upper", -1);
+                            args.putDouble("lower", -1);
+                        }
+                        else {
+                            args.putDouble("upper", Double.parseDouble(upperEditText.getText().toString()));
+                            args.putDouble("lower", Double.parseDouble(lowerEditText.getText().toString()));
+                        }
                         listener.onDialogPositiveClick(PayFilterDialogFragment.this); // call the positive click function in search screen
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Clear Filter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PayFilterDialogFragment.this.getDialog().cancel(); // just do nothing
+                        args.clear();
+                        args.putInt("fragmentID", 0);
+                        listener.onDialogNegativeClick(PayFilterDialogFragment.this); // call the negative click function in search screen
                     }
                 });
 

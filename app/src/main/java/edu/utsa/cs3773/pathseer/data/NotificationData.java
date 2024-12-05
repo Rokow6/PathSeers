@@ -15,14 +15,14 @@ import androidx.room.PrimaryKey;
 )
 public class NotificationData {
     @PrimaryKey(autoGenerate = true)
-    int notifID;
+    public int notifID;
 
     @ColumnInfo(name = "fk_userID")
-    int fk_userID;
+    public int fk_userID;
 
     @ColumnInfo(name = "title")
-    String title;
+    public String title;
 
     @ColumnInfo(name = "description")
-    String description;
+    public String description;
 }

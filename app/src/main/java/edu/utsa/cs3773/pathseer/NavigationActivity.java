@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.pathseer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -43,8 +44,25 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
 
         //Set the current class as the listener for navigation item selection
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
+        // Customize menu based on account type
+        customizeMenuBasedOnAccountType();
+    }
+    private void customizeMenuBasedOnAccountType() {
+        // Get account type from SharedPreferences
+        SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
+        String accountType = sharedPref.getString("accountType", "Job Seeker"); // Default to "Job Seeker"
+
+        Menu menu = navigationView.getMenu(); // Get the navigation menu
+        MenuItem postJobItem = menu.findItem(R.id.nav_post_job); // Find the "Post Job" menu item
+
+        // Show or hide the "Post Job" item based on account type
+        if ("Employer".equals(accountType)) {
+            postJobItem.setVisible(true); // Show for Employers
+        } else {
+            postJobItem.setVisible(false); // Hide for Job Seekers
+        }
+    }
     //Handles navigation item selection from the drawer menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

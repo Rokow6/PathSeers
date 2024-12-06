@@ -13,7 +13,7 @@
         android:id="@+id/logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@color/black"
+        android:src="@drawable/logo"
         android:layout_gravity="center_horizontal"
         android:contentDescription="App Logo" />
 
@@ -38,6 +38,14 @@
         android:textColor="#808080"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="24dp" />
+    <Spinner
+        android:id="@+id/accountTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:entries="@array/account_types" />
 
     <!-- Full Name Input -->
     <EditText

@@ -1,6 +1,7 @@
 package edu.utsa.cs3773.pathseer.data;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
@@ -53,6 +54,9 @@ public interface JobSeekerDao {
     // Adds a user as a job seeker using their user ID and resume path
     @Query("INSERT INTO JobSeekerData (fk_userID,resumeUriString) VALUES (:userID,:resumeUriString)")
     void addJobSeekerData(int userID, String resumeUriString);
+
+    @Insert
+    void addJobSeekerData(JobSeekerData jobSeekerData);
 
     // Removes a job seeker by job seeker ID (NOTE: this does not delete user data, just the job seeker status and resume path of a user)
     @Query("DELETE FROM JobSeekerData WHERE jobSeekerID = (:jobSeekerID)")

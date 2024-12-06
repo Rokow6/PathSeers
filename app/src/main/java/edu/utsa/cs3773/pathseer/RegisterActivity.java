@@ -6,11 +6,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.util.Patterns;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
+import edu.utsa.cs3773.pathseer.data.EmployerData;
+import edu.utsa.cs3773.pathseer.data.JobSeekerData;
 import edu.utsa.cs3773.pathseer.data.UserDao;
 import edu.utsa.cs3773.pathseer.data.UserData;
 import edu.utsa.cs3773.pathseer.objectClasses.User;
@@ -25,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerButton, signInButton;
     private AppDatabase db;
     private UserDao userDao;
+    private Spinner accountTypeSpinner;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
@@ -61,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        accountTypeSpinner = findViewById(R.id.accountTypeSpinner);
         fullNameInput = findViewById(R.id.input_full_name);
         emailInput = findViewById(R.id.input_email);
         usernameInput = findViewById(R.id.input_username);
@@ -72,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+        String accountType = accountTypeSpinner.getSelectedItem().toString();
         String fullName = fullNameInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
         String username = usernameInput.getText().toString().trim();
@@ -126,9 +132,40 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Update the hashed password in the database
                 userDao.updatePassword(userId, hashedPassword);
-                // Save full name to SharedPreferences
+
+                //Determine account type and create specific entries
                 SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
+
+                if (accountType.equals("Job Seeker")) {
+                    // Add entry to JobSeekerData table
+                    JobSeekerData jobSeeker = new JobSeekerData();
+                    jobSeeker.fk_userID = userId; // Link to UserData
+                    jobSeeker.resumeUriString = ""; // Placeholder
+                    jobSeeker.resumeFileName = ""; // Placeholder
+                    db.jobSeekerDao().addJobSeekerData(jobSeeker);
+
+                    editor.putString("accountType", "Job Seeker"); // Save account type
+                    runOnUiThread(() -> {
+                        showToast("Job Seeker account created successfully!");
+                        finish();
+                    });
+                    Log.d("RegisterActivity", "Job Seeker account created.");
+                } else if (accountType.equals("Employer")) {
+                    //Add entry to EmployerData table
+                    EmployerData employer = new EmployerData();
+                    employer.fk_userID = userId; // Link to UserData
+                    db.employerDao().addEmployerData(userId);
+
+                    editor.putString("accountType", "Employer"); // Save account type
+                    runOnUiThread(() -> {
+                        showToast("Employer account created successfully!");
+                        finish();
+                    });
+                    Log.d("RegisterActivity", "Employer account created.");
+                }
+
+                // Save full name to SharedPreferences
                 editor.putString("fullName", fullName); // Save the full name
                 editor.apply(); // Apply changes
 

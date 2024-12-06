@@ -8,7 +8,8 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_post_job"
-            android:title="Post Job"/>
+            android:title="Post Job"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_search_job"
             android:title="Search Jobs"/>

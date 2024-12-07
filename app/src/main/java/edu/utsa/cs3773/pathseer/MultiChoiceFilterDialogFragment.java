@@ -11,25 +11,25 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 
-public class RequirementFilterDialogFragment extends DialogFragment {
+public class MultiChoiceFilterDialogFragment extends DialogFragment {
     Bundle args;
     String[] items;
     ArrayList<String> selectedItems;
     boolean[] checkedItems;
 
     // interface that allows dialog to pass data back to the search screen
-    public interface RequirementFilterDialogListener {
+    public interface MultiChoiceFilterDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
         public void onDialogNegativeClick(DialogFragment dialog);
     }
-    RequirementFilterDialogListener listener;
+    MultiChoiceFilterDialogListener listener;
 
     // sets up the listener for passing data back
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (RequirementFilterDialogListener) context;
+            listener = (MultiChoiceFilterDialogListener) context;
         } catch (ClassCastException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -41,19 +41,19 @@ public class RequirementFilterDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         int i;
-
         args = getArguments();
-        // setup items from the arraylist passed in from the job search screen
-        ArrayList<String> requirementTexts = args.getStringArrayList("requirementTexts");
-        items = requirementTexts.toArray(new String[requirementTexts.size()]);
 
-        checkedItems = new boolean[items.length]; // initialize checkedItems to false
+        // setup items from the arraylist passed in from the job search screen
+        ArrayList<String> itemTexts = args.getStringArrayList("itemTexts");
+        items = itemTexts.toArray(new String[itemTexts.size()]);
+
+        checkedItems = new boolean[items.length]; // initialize checkedItems to false based on items length
         for (i = 0; i < checkedItems.length; i++) {
             checkedItems[i] = false;
         }
 
         // setup selected items
-        selectedItems = args.getStringArrayList("selectedRequirements");
+        selectedItems = args.getStringArrayList("selectedItems");
 
         // look through items and selected items and check the ones that are already selected
         for (i = 0; i < items.length; i++) {
@@ -62,7 +62,7 @@ public class RequirementFilterDialogFragment extends DialogFragment {
             }
         }
 
-        builder.setTitle("Select Requirements")
+        builder.setTitle(args.getString("title"))
                 .setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -79,16 +79,15 @@ public class RequirementFilterDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // set args to new values to pass back into the search screen
                         args.clear();
-                        args.putStringArrayList("selectedRequirements", selectedItems);
-                        listener.onDialogPositiveClick(RequirementFilterDialogFragment.this); // call the positive click function in search screen
+                        args.putStringArrayList("selectedItems", selectedItems);
+                        listener.onDialogPositiveClick(MultiChoiceFilterDialogFragment.this); // call the positive click function in search screen
                     }
                 })
                 .setNegativeButton("Clear filter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        args.clear();
-                        args.putInt("fragmentID", 1);
-                        listener.onDialogNegativeClick(RequirementFilterDialogFragment.this); // call the negative click function in search screen
+                        // fragment ID is already in args, so don't clear it and just call the negative click listener
+                        listener.onDialogNegativeClick(MultiChoiceFilterDialogFragment.this); // call the negative click function in search screen
                     }
                 });
 

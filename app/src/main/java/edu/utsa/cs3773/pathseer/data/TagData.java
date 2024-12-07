@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey;
 @Entity
 public class TagData {
     @PrimaryKey(autoGenerate = true)
-    int tagID;
+    public int tagID;
 
     @ColumnInfo(name = "text")
-    String text;
+    public String text;
 }

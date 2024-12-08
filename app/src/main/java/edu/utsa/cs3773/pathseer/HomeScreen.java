@@ -33,7 +33,7 @@ public class HomeScreen extends NavigationActivity {
         letsGetStartedButton.setOnClickListener(view -> {
             Intent intent = new Intent(HomeScreen.this, JobSearchScreen.class);
             startActivity(intent);
-            finish(); // Optionally finish HomeScreen to prevent returning to it via back button
+            finish(); //
         });
     }
 }

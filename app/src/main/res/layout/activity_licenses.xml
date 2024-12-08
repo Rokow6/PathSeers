@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/back_button"
+            android:contentDescription="Back"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Certificates and licenses"
+            android:textSize="24sp"
+            android:textColor="#001F11"
+            android:layout_gravity="start"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="24dp" />
+
+        <!-- License Input -->
+        <TextView
+            android:id="@+id/license_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Certificates and licenses"
+            android:textSize="14sp"
+            android:textColor="#001F11"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textColor="#001F11"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Year received -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Year received"
+            android:textSize="14sp"
+            android:textColor="#001F11"
+            android:paddingBottom="4dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="MM/DD/YYYY"
+            android:inputType="date"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp" />
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="14sp"
+            android:textColor="#001F11"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Optional"
+            android:textSize="12sp"
+            android:textColor="#808080"
+            android:gravity="end"
+            android:layout_marginBottom="8dp" />
+
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00796B"
+            android:padding="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

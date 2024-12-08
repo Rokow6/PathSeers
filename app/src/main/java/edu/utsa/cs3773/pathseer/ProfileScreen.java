@@ -47,11 +47,11 @@ public class ProfileScreen extends NavigationActivity {
         }
 
         // Fetch user info from the database
-        String fullName = db.jobSeekerDao().getFullNameFromJobSeekerID(jobSeekerID);
+        String name = db.jobSeekerDao().getFullNameFromJobSeekerID(jobSeekerID);
         String email = db.jobSeekerDao().getEmailFromJobSeekerID(jobSeekerID);
 
-        if (fullName != null) {
-            String initials = getInitials(fullName);
+        if (name != null) {
+            String initials = getInitials(name);
             profilePictureText.setText(initials); // Display initials
         }
 

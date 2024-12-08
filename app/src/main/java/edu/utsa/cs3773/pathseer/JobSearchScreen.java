@@ -24,25 +24,30 @@ import java.util.List;
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
 import edu.utsa.cs3773.pathseer.data.JobListingData;
 import edu.utsa.cs3773.pathseer.data.RequirementData;
+import edu.utsa.cs3773.pathseer.data.TagData;
 
 public class JobSearchScreen extends NavigationActivity implements PayFilterDialogFragment.PayFilterDialogListener,
-        RequirementFilterDialogFragment.RequirementFilterDialogListener{
+        MultiChoiceFilterDialogFragment.MultiChoiceFilterDialogListener {
     private RecyclerView recyclerViewJobs;
     private SearchView searchView;
     private SearchManager searchManager;
     private FragmentManager fragmentManager;
     private List<JobListingData> jobListingData;
     private ArrayList<String> requirementTexts;
+    private ArrayList<String> tagTexts;
     private String query;
     private double payUpperBound = -1;
     private double payLowerBound = -1;
     private ArrayList<String> selectedRequirements;
+    private ArrayList<String> selectedTags;
     private AppDatabase db;
     private Button payFilterButton;
     private Button requirementFilterButton;
+    private Button tagFilterButton;
     private ImageButton searchButton;
     private PayFilterDialogFragment payFilterDialogFragment;
-    private RequirementFilterDialogFragment requirementFilterDialogFragment;
+    private MultiChoiceFilterDialogFragment requirementFilterDialogFragment;
+    private MultiChoiceFilterDialogFragment tagFilterDialogFragment;
     private SharedPreferences sharedPref;
 
     @Override
@@ -64,6 +69,16 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
             }
         }
 
+        // initialize tag related variables for filter
+        selectedTags = new ArrayList<>();
+        tagTexts = new ArrayList<>();
+        List<TagData> tagList = db.tagDao().getAll();
+        for (TagData tag : tagList) {
+            if (!tagTexts.contains(tag.text)) { // check if it's already there
+                tagTexts.add(tag.text); // add the tag
+            }
+        }
+
         initializeViews();
         initializeButtonListeners();
     }
@@ -82,7 +97,7 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
 
     private void initiateSearch(String query) {
         jobListingData = JobListingSearcher.SearchJobListings(db, query, payLowerBound, payUpperBound,
-                selectedRequirements, new ArrayList<>()); // get search results based on entered query
+                selectedRequirements, selectedTags); // get search results based on entered query
         updateViews();
     }
 
@@ -91,7 +106,8 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
     public void onDialogPositiveClick(DialogFragment dialog) {
         // update the current filters with the new data
         Bundle args = dialog.getArguments();
-        if (args.getDouble("upper", -2) != -2) {
+        // check what got returned and check which filter it was
+        if (args.getDouble("upper", -2) != -2 && args.getDouble("lower", -2) != -2) {
             payUpperBound = args.getDouble("upper", -1);
             payLowerBound = args.getDouble("lower", -1);
             if (payUpperBound < payLowerBound) { // check if upper bound is less than lower bound and error if it is
@@ -100,8 +116,13 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
                 payLowerBound = -1;
             }
         }
-        else if (args.getStringArrayList("selectedRequirements") != null) {
-            selectedRequirements = args.getStringArrayList("selectedRequirements");
+        else if (args.getStringArrayList("selectedItems") != null) {
+            if (args.getInt("fragmentID", -1) == 1) { // fragment was for requirements so update that
+                selectedRequirements = args.getStringArrayList("selectedItems");
+            }
+            else if (args.getInt("fragmentID", -1) == 2) { // ditto but for tags
+                selectedTags = args.getStringArrayList("selectedItems");
+            }
         }
 
         initiateSearch(searchView.getQuery().toString()); // since new filters were set, search with those filters
@@ -121,6 +142,10 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
             // clear requirement filter
             selectedRequirements.clear();
         }
+        else if (args.getInt("fragmentID", -1) == 2) { // tag filter dialog
+            // clear tag filter
+            selectedTags.clear();
+        }
 
         initiateSearch(searchView.getQuery().toString()); // search again to match newly cleared filters
     }
@@ -139,7 +164,9 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
         payFilterButton = findViewById(R.id.btn_pay);
         payFilterDialogFragment = new PayFilterDialogFragment();
         requirementFilterButton = findViewById(R.id.btn_requirements);
-        requirementFilterDialogFragment = new RequirementFilterDialogFragment();
+        requirementFilterDialogFragment = new MultiChoiceFilterDialogFragment();
+        tagFilterButton = findViewById(R.id.btn_tags);
+        tagFilterDialogFragment = new MultiChoiceFilterDialogFragment();
         searchButton = findViewById(R.id.btn_filter);
     }
 
@@ -159,10 +186,24 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
             @Override
             public void onClick(View view) { // user clicks the requirement filter button
                 Bundle args = new Bundle();
-                args.putStringArrayList("selectedRequirements", selectedRequirements);
-                args.putStringArrayList("requirementTexts", requirementTexts);
+                args.putStringArrayList("selectedItems", selectedRequirements);
+                args.putStringArrayList("itemTexts", requirementTexts);
+                args.putString("title", "Select Requirements");
+                args.putInt("fragmentID", 1);
                 requirementFilterDialogFragment.setArguments(args); // set args
                 requirementFilterDialogFragment.show(fragmentManager, "REQUIREMENT_FRAGMENT"); // show popup
+            }
+        });
+        tagFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // user clicks the tag filter button
+                Bundle args = new Bundle();
+                args.putStringArrayList("selectedItems", selectedTags);
+                args.putStringArrayList("itemTexts", tagTexts);
+                args.putString("title", "Select Tags");
+                args.putInt("fragmentID", 2);
+                tagFilterDialogFragment.setArguments(args); // set args
+                tagFilterDialogFragment.show(fragmentManager, "TAG_FRAGMENT");
             }
         });
         searchButton.setOnClickListener(new View.OnClickListener() { // user clicks the search button

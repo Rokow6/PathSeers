@@ -59,14 +59,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp" />
 
-        <!-- No Saved Jobs Layout -->
+        <!-- Saved Jobs Layout -->
         <LinearLayout
             android:id="@+id/savedJobsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,14 +95,14 @@
                 android:paddingVertical="12dp" />
         </LinearLayout>
 
-        <!-- No Applied Jobs Layout -->
+        <!-- Applied Jobs Layout -->
         <LinearLayout
             android:id="@+id/appliedJobsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

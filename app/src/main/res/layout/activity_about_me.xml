@@ -31,23 +31,25 @@
 
     <!-- Full Name Input -->
     <TextView
-        android:id="@+id/email_label"
+        android:id="@+id/fullname_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="First Name"
         android:textSize="14sp"
         android:textColor="#001F11"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="4dp"
+        android:labelFor="@id/fullname_input" /> <!-- Links the label to the EditText -->
 
     <EditText
-        android:id="@+id/email_input"
+        android:id="@+id/fullname_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_background"
         android:padding="12dp"
-        android:inputType="textEmailAddress"
         android:textColor="#001F11"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:contentDescription="First name input field" /> <!-- Optional for additional accessibility -->
+
 
     <!-- Headline Input -->
     <TextView

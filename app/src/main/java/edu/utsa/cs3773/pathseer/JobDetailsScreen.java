@@ -3,12 +3,16 @@ package edu.utsa.cs3773.pathseer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import edu.utsa.cs3773.pathseer.data.AppDatabase;
+import edu.utsa.cs3773.pathseer.data.ApplicationData;
 import edu.utsa.cs3773.pathseer.data.JobListingData;
 
 
@@ -16,6 +20,7 @@ public class JobDetailsScreen extends NavigationActivity {
 
     private TextView jobTitle, jobLocation, jobPay, jobDescription;
     private LinearLayout requirementsLayout, responsibilitiesLayout, benefitsLayout;
+    private Button applyButton;
     private AppDatabase db;
     private SharedPreferences sharedPref;
 
@@ -36,7 +41,14 @@ public class JobDetailsScreen extends NavigationActivity {
             displayRequirements(jobListingID);
             displayResponsibilities(jobListingID);
             displayBenefits(jobListingID);
+
+            applyButton.setOnClickListener(v -> {
+                    addApplicationForCurrentUser(jobListingID);
+            });
         }
+
+        // Debugging applications for the current user
+        debugApplicationsForCurrentUser();
     }
 
     // Fetch job details from the database
@@ -53,6 +65,29 @@ public class JobDetailsScreen extends NavigationActivity {
             });
         }).start();
     }
+
+    private void addApplicationForCurrentUser(int jobListingID) {
+        int currentJobSeekerID = db.jobSeekerDao().getJobSeekerIDFromUserID(sharedPref.getInt("user_id", -1)); // Retrieve job seeker ID
+        if (currentJobSeekerID == -1) {
+            // Handle the case where no user is logged in
+            runOnUiThread(() -> Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show());
+            return;
+        }
+
+        new Thread(() -> {
+            // Check if the application already exists
+            int existingApplicationID = db.applicationDao().getApplicationIDFromAssociatedIDs(currentJobSeekerID, jobListingID);
+            if (existingApplicationID != 0) {
+                runOnUiThread(() -> Toast.makeText(this, "You have already applied for this job.", Toast.LENGTH_SHORT).show());
+                return;
+            }
+
+            // Add the application
+            db.applicationDao().addApplicationData(currentJobSeekerID, jobListingID, "Application submitted.");
+            runOnUiThread(() -> Toast.makeText(this, "Application submitted successfully!", Toast.LENGTH_SHORT).show());
+        }).start();
+    }
+
 
     // Adds the list of requirements to linear layout
     private void displayRequirements(int jobListingID) {
@@ -110,5 +145,19 @@ public class JobDetailsScreen extends NavigationActivity {
         requirementsLayout = findViewById(R.id.requirementsLayout);
         responsibilitiesLayout = findViewById(R.id.responsibilitiesLayout);
         benefitsLayout = findViewById(R.id.benefitsLayout);
+        applyButton = findViewById(R.id.applyButton);
     }
+
+    private void debugApplicationsForCurrentUser() {
+        int currentJobSeekerID = sharedPref.getInt("jobSeekerID", -1);
+        if (currentJobSeekerID == -1) return;
+
+        new Thread(() -> {
+            List<ApplicationData> applications = db.applicationDao().getApplicationsFromJobSeekerID(currentJobSeekerID);
+            for (ApplicationData app : applications) {
+                Log.d("Application", "Job ID: " + app.fk_jobListingID + ", Description: " + app.description);
+            }
+        }).start();
+    }
+
 }

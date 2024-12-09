@@ -13,6 +13,9 @@ Job Seeker
 Employer
 - **Post Job**: Create detailed job postings to attract top talent.
 - **Secure Registration/Login**: Your data is protected with robust encryption.
+
+Admin
+- **Has functionalities of both Job Seeker and Employer**
 ---
 
 ## Installation

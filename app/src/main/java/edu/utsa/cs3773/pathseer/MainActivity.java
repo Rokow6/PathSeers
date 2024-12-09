@@ -105,9 +105,15 @@ public class MainActivity extends AppCompatActivity {
     public void saveUserDetails(String username) {
         executorService.execute(() -> {
             UserData userData = userDao.getUserDataByUsername(username);
+            int employerID = userDao.getEmployerIDFromUsername(username);
+            String accountType = "Job Seeker";
             if (userData != null) {
-                // Save the full name along with the user ID
-                PreferenceUtils.saveUserSession(MainActivity.this, userData.userID, userData.name);
+                if (employerID > 0) { // Set account type to employer if the user is one else stay as job seeker
+                    accountType = "Employer";
+                }
+
+                // Save the full name along with the user ID and account type
+                PreferenceUtils.saveUserSession(MainActivity.this, userData.userID, userData.name, accountType);
             }
         });
     }

@@ -34,6 +34,16 @@ public interface UserDao {
     @Query("SELECT * FROM UserData WHERE username = :username")
     UserData getUserDataByUsername(String username);
 
+    // Returns the employer ID for a specified username
+    // Will return 0 if user is not an employer
+    @Query("SELECT EmployerData.employerID FROM UserData JOIN EmployerData ON userID = fk_userID WHERE username = (:username)")
+    int getEmployerIDFromUsername(String username);
+
+    // Returns the job seeker ID for a specified username
+    // Will return 0 if the user is not a job seeker
+    @Query("SELECT JobSeekerData.jobSeekerID FROM UserData JOIN JobSeekerData ON userID = fk_userID WHERE username = (:username)")
+    int getJobSeekerIDFromUsername(String username);
+
     // Adds a new user to the database (id is auto-incremented)
     // Make sure to check the database with getUserIDFromUsername to check if the username already exists
     // (You may need to just pass in an empty string for anything that's currently blank)

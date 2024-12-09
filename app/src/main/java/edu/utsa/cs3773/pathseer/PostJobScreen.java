@@ -224,6 +224,7 @@ public class PostJobScreen extends NavigationActivity {
         }
         for (int i = 0; i < tagsTextView.size(); i++) {
             jobListing.addTag(tagsTextView.get(i).getText().toString().trim());
+            db.jobHasTagDao().addJobHasTagData(jobListing.getJobListingID(), db.tagDao().getTagIDFromText(tagsTextView.get(i).getText().toString().trim()));
         }
     }
 

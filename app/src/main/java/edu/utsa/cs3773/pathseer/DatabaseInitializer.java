@@ -85,12 +85,16 @@ public class DatabaseInitializer {
     private static void initializeJobSeekerData(AppDatabase db) {
         // Add test job seeker
         db.jobSeekerDao().addJobSeekerData(db.userDao().getUserIDFromUsername("jobseeker"), ""); // no test resume data yet :(
+        // Add admin for more functionality
+        db.jobSeekerDao().addJobSeekerData(db.userDao().getUserIDFromUsername("admin"), "");
     }
 
     // Inserts employer data into the database
     private static void initializeEmployerData(AppDatabase db) {
         // Add test employer
         db.employerDao().addEmployerData(db.userDao().getUserIDFromUsername("employer"));
+        // Add admin for more functionality
+        db.employerDao().addEmployerData(db.userDao().getUserIDFromUsername("admin"));
     }
 
     // Inserts notification data

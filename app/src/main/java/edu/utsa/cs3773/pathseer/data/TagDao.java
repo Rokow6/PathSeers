@@ -22,6 +22,11 @@ public interface TagDao {
             "WHERE JobHasTagData.fk_jobListingID=(:jobListingID)")
     List<TagData> getTagsByJobListingID(int jobListingID);
 
+    // Returns the list of tag texts associated with a specific job ID
+    @Query("SELECT TagData.text FROM TagData JOIN JobHasTagData ON JobHasTagData.fk_tagID=TagData.tagID " +
+            "WHERE JobHasTagData.fk_jobListingID=(:jobListingID)")
+    List<String> getTagTextsByJobListingID(int jobListingID);
+
     // Adds a new tag to the database (id is auto-incremented)
     // Make sure to check if tag already exists with getTagIDFromText
     @Query("INSERT INTO TagData (text) VALUES (:text)")

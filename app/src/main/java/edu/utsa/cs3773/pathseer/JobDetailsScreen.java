@@ -18,8 +18,8 @@ import edu.utsa.cs3773.pathseer.data.JobListingData;
 
 public class JobDetailsScreen extends NavigationActivity {
 
-    private TextView jobTitle, jobLocation, jobPay, jobDescription;
-    private LinearLayout requirementsLayout, responsibilitiesLayout, benefitsLayout;
+    private TextView jobTitle, employerName, jobLocation, jobPay, jobDescription;
+    private LinearLayout requirementsLayout, responsibilitiesLayout, benefitsLayout, tagsLayout;
     private Button applyButton;
     private AppDatabase db;
     private SharedPreferences sharedPref;
@@ -41,6 +41,7 @@ public class JobDetailsScreen extends NavigationActivity {
             displayRequirements(jobListingID);
             displayResponsibilities(jobListingID);
             displayBenefits(jobListingID);
+            displayTags(jobListingID);
 
             applyButton.setOnClickListener(v -> {
                     addApplicationForCurrentUser(jobListingID);
@@ -58,6 +59,7 @@ public class JobDetailsScreen extends NavigationActivity {
             runOnUiThread(() -> {
                 if (jobListing != null) {
                     jobTitle.setText(jobListing.title);
+                    employerName.setText(db.jobListingDao().getEmployerNameFromJobListingID(jobListingID));
                     jobLocation.setText(jobListing.location);
                     jobPay.setText(String.format("$%.2f / yr", jobListing.pay));
                     jobDescription.setText(jobListing.description);
@@ -68,9 +70,9 @@ public class JobDetailsScreen extends NavigationActivity {
 
     private void addApplicationForCurrentUser(int jobListingID) {
         int currentJobSeekerID = db.jobSeekerDao().getJobSeekerIDFromUserID(sharedPref.getInt("user_id", -1)); // Retrieve job seeker ID
-        if (currentJobSeekerID == -1) {
+        if (currentJobSeekerID <= 0) {
             // Handle the case where no user is logged in
-            runOnUiThread(() -> Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show());
+            runOnUiThread(() -> Toast.makeText(this, "You are not a job seeker or user is not logged in.", Toast.LENGTH_SHORT).show());
             return;
         }
 
@@ -137,14 +139,32 @@ public class JobDetailsScreen extends NavigationActivity {
         }
     }
 
+    // Adds the list of tags to linear layout
+    private void displayTags(int jobListingID) {
+        List<String> tags = db.tagDao().getTagTextsByJobListingID(jobListingID);
+
+        // Clear any previous data (in case this is refreshed)
+        tagsLayout.removeAllViews();
+
+        for (String tag : tags) {
+            TextView textView = new TextView(this);
+            textView.setText(tag);
+            textView.setTextSize(16);
+            textView.setPadding(0, 8, 0, 8);
+            tagsLayout.addView(textView);
+        }
+    }
+
     private void initializeViews() {
         jobTitle = findViewById(R.id.jobTitle);
+        employerName = findViewById(R.id.employerName);
         jobLocation = findViewById(R.id.jobLocation);
         jobPay = findViewById(R.id.jobPay);
         jobDescription = findViewById(R.id.jobDescription);
         requirementsLayout = findViewById(R.id.requirementsLayout);
         responsibilitiesLayout = findViewById(R.id.responsibilitiesLayout);
         benefitsLayout = findViewById(R.id.benefitsLayout);
+        tagsLayout = findViewById(R.id.tagsLayout);
         applyButton = findViewById(R.id.applyButton);
     }
 

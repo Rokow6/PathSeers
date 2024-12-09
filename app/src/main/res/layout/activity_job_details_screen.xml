@@ -30,6 +30,13 @@
                 android:textSize="26dp" />
 
             <TextView
+                android:id="@+id/employerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="18dp" />
+
+            <TextView
                 android:id="@+id/jobLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,6 +111,24 @@
 
             <LinearLayout
                 android:id="@+id/benefitsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/tagsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tags"
+                android:textColor="#00796B"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:id="@+id/tagsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"></LinearLayout>

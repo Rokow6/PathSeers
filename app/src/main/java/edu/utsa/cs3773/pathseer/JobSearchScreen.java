@@ -154,7 +154,7 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
     private void initializeViews() {
         recyclerViewJobs = findViewById(R.id.recyclerViewJobs);
         recyclerViewJobs.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData));
+        recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData, db));
         searchView = findViewById(R.id.sv_search_job);
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         fragmentManager = getSupportFragmentManager();
@@ -216,6 +216,6 @@ public class JobSearchScreen extends NavigationActivity implements PayFilterDial
 
     // Updates the recycler view to reflect current search results
     private void updateViews() {
-        recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData));
+        recyclerViewJobs.setAdapter(new ItemJobViewAdapter(getApplicationContext(), jobListingData, db));
     }
 }

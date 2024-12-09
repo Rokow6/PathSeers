@@ -10,16 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import edu.utsa.cs3773.pathseer.data.AppDatabase;
+import edu.utsa.cs3773.pathseer.data.EmployerData;
 import edu.utsa.cs3773.pathseer.data.JobListingData;
 
 public class ItemJobViewAdapter extends RecyclerView.Adapter<ItemJobViewHolder> {
 
     Context context;
     List<JobListingData> jobListingData;
+    AppDatabase db;
 
-    public ItemJobViewAdapter(Context context, List<JobListingData> jobListingData) {
+    public ItemJobViewAdapter(Context context, List<JobListingData> jobListingData, AppDatabase db) {
         this.context = context;
         this.jobListingData = jobListingData;
+        this.db = db;
     }
 
     @NonNull
@@ -31,10 +35,11 @@ public class ItemJobViewAdapter extends RecyclerView.Adapter<ItemJobViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ItemJobViewHolder holder, int position) {
         JobListingData job = jobListingData.get(position);
+        String employerName = db.jobListingDao().getEmployerNameFromJobListingID(job.jobListingID);
 
         // Set job data in the UI
         holder.tv_job_title.setText(job.title);
-        holder.tv_company_location.setText(job.location);
+        holder.tv_company_location.setText(employerName + " in " + job.location);
         holder.tv_salary.setText(String.format("$%,.2f", job.pay));
 
         // Set click listener for the "Apply" button

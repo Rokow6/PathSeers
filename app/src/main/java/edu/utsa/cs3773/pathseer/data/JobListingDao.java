@@ -36,6 +36,20 @@ public interface JobListingDao {
     @Query("SELECT * FROM JobListingData WHERE UPPER(location) LIKE UPPER('%' || :location || '%')")
     List<JobListingData> getJobListingsByLocation(String location);
 
+    // Returns the name of the employer based on job listing id
+    @Query("SELECT UserData.name FROM JobListingData " +
+            "JOIN EmployerData ON fk_employerID = employerID " +
+            "JOIN UserData ON fk_userID = userID " +
+            "WHERE jobListingID = (:jobListingID)")
+    String getEmployerNameFromJobListingID(int jobListingID);
+
+    // Returns the list of tag data associated with the job listing
+    @Query("SELECT TagData.* FROM JobListingData " +
+            "JOIN JobHasTagData ON jobListingID = fk_jobListingID " +
+            "JOIN TagData ON fk_tagID = tagID " +
+            "WHERE jobListingID = (:jobListingID)")
+    List<TagData> getTagDataFromJobListingID(int jobListingID);
+
     // Returns a list of job listing data associated with a requirement
     @Query("SELECT JobListingData.*" +
             " FROM JobListingData JOIN RequirementData ON RequirementData.fk_jobListingID = JobListingData.jobListingID" +
